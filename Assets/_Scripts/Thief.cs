@@ -52,19 +52,27 @@ public class Thief : MonoBehaviour
     void FixedUpdate()
     {
         rigidBody.linearVelocity = move * moveSpeed;
-        transform.localScale = new Vector3(SetFacingDirection(), 1, 1);
+        SetFacingDirection();
 
         if (move.magnitude > 0) animator.SetTrigger("Walk");
         if (move.magnitude == 0) animator.SetTrigger("Idle");
     }
 
-    // returns 1 if facing move
+    // determines which direction the player is facing
     int SetFacingDirection()
     {
         // if not moving horiztonally, change nothing.
-        if (move.x == 0) return facingDirection;
+        if (move.x == 0)
+            return facingDirection;
 
         // return 1 if moving left, return -1 if moving right;
-        return facingDirection = -1 * (int)(move.x / Mathf.Abs(move.x));
+        int newDirection = -1 * (int)(move.x / Mathf.Abs(move.x));
+
+        if (newDirection == facingDirection)
+            return facingDirection;
+
+        // flip character if necessary and return (and set) new direction value
+        transform.localScale = new Vector3(newDirection, 1, 1);
+        return facingDirection = newDirection;
     }
 }
