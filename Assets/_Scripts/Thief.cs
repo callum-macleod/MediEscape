@@ -41,7 +41,9 @@ public class Thief : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            animator.SetTrigger("Hurt");
+            animator.SetTrigger("TrHurt");
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+            animator.SetTrigger("TrAttack");
 
         float xMov = Input.GetAxisRaw("Horizontal");
         float yMov = Input.GetAxisRaw("Vertical");
@@ -54,8 +56,8 @@ public class Thief : MonoBehaviour
         rigidBody.linearVelocity = move * moveSpeed;
         SetFacingDirection();
 
-        if (move.magnitude > 0) animator.SetTrigger("Walk");
-        if (move.magnitude == 0) animator.SetTrigger("Idle");
+        if (move.magnitude > 0) animator.SetTrigger("TrWalk");
+        if (move.magnitude == 0) animator.SetTrigger("TrIdle");
     }
 
     // determines which direction the player is facing
