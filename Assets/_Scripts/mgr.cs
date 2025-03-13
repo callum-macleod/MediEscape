@@ -1,7 +1,9 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class mgr : MonoBehaviour
 {
+    [SerializeField] CinemachineCamera cinemachine;
     [SerializeField] Transform thiefSpawnPoint;
     [SerializeField] GameObject thiefPrefab;
     GameObject thiefRef;
@@ -11,6 +13,7 @@ public class mgr : MonoBehaviour
     {
         thiefRef = Instantiate(thiefPrefab, thiefSpawnPoint.position, Quaternion.identity);
         thiefRef.name = "Thief";
+        cinemachine.Follow = thiefRef.transform;
     }
 
     // Update is called once per frame
