@@ -35,9 +35,10 @@ public class Thief : MonoBehaviour
     // determines how early can you buffer an attack/ability
     float inputBufferMaxPeriod = 0.2f;
 
-    float attackCooldown = 0.6f;
+    float attackCooldown = 0.65f;
     float currentAttackCooldown = 0f;
     bool attackBuffered = false;
+    bool attacking { get { return currentAttackCooldown > 0; } }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -51,7 +52,7 @@ public class Thief : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
             animator.SetTrigger("TrHurt");
-        if (Input.GetKeyDown(KeyCode.Mouse0) || attackBuffered)
+        if (Input.GetKey(KeyCode.Mouse0) || attackBuffered)
             Attack();
 
         float xMov = Input.GetAxisRaw("Horizontal");
@@ -67,7 +68,7 @@ public class Thief : MonoBehaviour
         rigidBody.linearVelocity = move * moveSpeed;
         SetFacingDirection();
 
-        if (move.magnitude > 0) animator.SetTrigger("TrWalk");
+        if (move.magnitude > 0 && currentAttackCooldown <= 0) animator.SetTrigger("TrWalk");
         if (move.magnitude == 0) animator.SetTrigger("TrIdle");
     }
 
@@ -102,6 +103,7 @@ public class Thief : MonoBehaviour
 
         attackBuffered = false;
         currentAttackCooldown = attackCooldown;
+        currentAttackCooldown += Time.deltaTime;  // ensures that `attacking` returns true immediately
         animator.SetTrigger("TrAttack");
     }
 }
