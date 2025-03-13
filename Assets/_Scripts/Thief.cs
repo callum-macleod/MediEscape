@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Thief : MonoBehaviour
 {
@@ -25,6 +28,8 @@ public class Thief : MonoBehaviour
             return _rigidBody;
         }
     }
+
+    [SerializeField] List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
     // GENERAL PROPERTIES AND FIELDS
     Vector2 move;
@@ -88,6 +93,29 @@ public class Thief : MonoBehaviour
         // flip character if necessary and return (and set) new direction value
         transform.localScale = new Vector3(newDirection, 1, 1);
         return facingDirection = newDirection;
+    }
+
+    
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        // some walls (front and back) require us to dynamically update the draw order of sprites
+        // while in contact with such walls:
+        if (collision.tag == "RequiresDrawOrder")
+        {
+            int tilemapOrder = collision.GetComponent<TilemapRenderer>().sortingOrder;  // get draw order
+
+            // is wall above or below player?
+            if (collision.bounds.center.y > transform.position.y)
+                tilemapOrder++;
+            else
+                tilemapOrder--;
+
+            // update player sprites draw order
+            foreach (SpriteRenderer sprite in spriteRenderers)
+            {
+                sprite.sortingOrder = tilemapOrder;
+            }
+        }
     }
 
     void Attack()
