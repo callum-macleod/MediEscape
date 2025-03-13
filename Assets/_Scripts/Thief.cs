@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Thief : MonoBehaviour
 {
+    // COMPONENTS
     Animator _animator;
     Animator animator
     {
@@ -25,10 +26,18 @@ public class Thief : MonoBehaviour
         }
     }
 
+    // GENERAL PROPERTIES AND FIELDS
     Vector2 move;
     float moveSpeed = 2.5f;
 
     int facingDirection = 1;
+
+    // determines how early can you buffer an attack/ability
+    float inputBufferMaxPeriod = 0.2f;
+
+    float attackCooldown = 0.6f;
+    float currentAttackCooldown = 0f;
+    bool attackBuffered = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,13 +51,15 @@ public class Thief : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
             animator.SetTrigger("TrHurt");
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-            animator.SetTrigger("TrAttack");
+        if (Input.GetKeyDown(KeyCode.Mouse0) || attackBuffered)
+            Attack();
 
         float xMov = Input.GetAxisRaw("Horizontal");
         float yMov = Input.GetAxisRaw("Vertical");
         move = new Vector2(xMov, yMov).normalized;
 
+        if (currentAttackCooldown > 0)
+            currentAttackCooldown -= Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -76,5 +87,21 @@ public class Thief : MonoBehaviour
         // flip character if necessary and return (and set) new direction value
         transform.localScale = new Vector3(newDirection, 1, 1);
         return facingDirection = newDirection;
+    }
+
+    void Attack()
+    {
+        if (currentAttackCooldown > 0)
+        {
+            // if attack is about to come off cooldown: buffer attack
+            if (!attackBuffered && currentAttackCooldown < inputBufferMaxPeriod)
+                attackBuffered = true;
+
+            return;
+        }
+
+        attackBuffered = false;
+        currentAttackCooldown = attackCooldown;
+        animator.SetTrigger("TrAttack");
     }
 }
