@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3959407590892399962}
   - component: {fileID: 7376821302614539972}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: dagger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6576238395214921319}
   - component: {fileID: 5151401003939779660}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Back leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7578640818459813113}
   - component: {fileID: 3439346278451372174}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,9 +280,9 @@ GameObject:
   - component: {fileID: 5768667278224976417}
   - component: {fileID: -6197710570955885384}
   - component: {fileID: 1434601564064693640}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ThiefPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -467,7 +467,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6493611525633760606}
   - component: {fileID: 8984727970988982608}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -555,7 +555,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8450207927899604998}
   - component: {fileID: 6193681006478032343}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -642,7 +642,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4451569825553456774}
   - component: {fileID: 8806431753898781670}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Back arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -730,7 +730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2786149653584690141}
   - component: {fileID: 95092605173909525}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: dagger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -817,7 +817,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7266302021287356596}
   - component: {fileID: 116892850032529774}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -905,7 +905,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8500988386378407829}
   - component: {fileID: 4489894981642738295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: hood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
