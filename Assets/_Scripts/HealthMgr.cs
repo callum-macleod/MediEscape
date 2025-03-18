@@ -14,6 +14,11 @@ public class HealthMgr : MonoBehaviour
         DrawHearts();
     }
 
+    public void Update()
+    {
+        DrawHearts();
+    }
+
     public void DrawHearts()
     {
         ClearHearts();
