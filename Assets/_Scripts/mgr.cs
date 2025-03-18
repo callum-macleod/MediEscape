@@ -17,6 +17,9 @@ public class mgr : MonoBehaviour
     [SerializeField] GameObject knightPrefab;
     List<GameObject> guardRefs = new List<GameObject>();
 
+    [Header("Camera")]
+    [SerializeField] CinemachineCamera cinemachineCamera;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,6 +53,8 @@ public class mgr : MonoBehaviour
                 guardAI.target = thiefRef.transform;
             }
         }
+
+        cinemachineCamera.Follow = thiefRef.transform;
     }
 
     // Update is called once per frame
