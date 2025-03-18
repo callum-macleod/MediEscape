@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 
 public class GuardAI : MonoBehaviour
 {
@@ -37,6 +39,12 @@ public class GuardAI : MonoBehaviour
     private float searchTimer = 0f;
     private Vector2 lastKnownDirection = Vector2.right;
     [HideInInspector] public string STATE;
+
+
+    [SerializeField] List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
+
+    Vector3 lastPos = Vector3.zero;
+    int facingDirection = 1;
 
     void Start()
     {
@@ -78,13 +86,31 @@ public class GuardAI : MonoBehaviour
         }
 
         Debug.Log($"Guard {transform.name} is in {STATE} state");
+
+        SetFacingDirection();
     }
 
-    void Update()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        
-    }
+        // some walls (front and back) require us to dynamically update the draw order of sprites
+        // while in contact with such walls:
+        if (collision.tag == "RequiresDrawOrder")
+        {
+            int tilemapOrder = collision.GetComponent<TilemapRenderer>().sortingOrder;  // get draw order
 
+            // is wall above or below player?
+            if (collision.bounds.center.y > transform.position.y)
+                tilemapOrder++;
+            else
+                tilemapOrder--;
+
+            // update player sprites draw order
+            foreach (SpriteRenderer sprite in spriteRenderers)
+            {
+                sprite.sortingOrder = tilemapOrder;
+            }
+        }
+    }
     void SetTarget(Transform newTarget)
     {
         target = newTarget;
@@ -218,5 +244,26 @@ public class GuardAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawRay(eyePosition, leftRayDirection * fovRange);
         Gizmos.DrawRay(eyePosition, rightRayDirection * fovRange);
+    }
+
+    int SetFacingDirection()
+    {
+        // calculate movement since last physics frame
+        float xmov = lastPos.x - transform.position.x;
+        lastPos = transform.position;
+        print(xmov);
+        // if not moving horiztonally, change nothing.
+        if (Mathf.Abs(xmov) <= 0.01)
+            return facingDirection;
+
+        // return 1 if moving left, return -1 if moving right;
+        int newDirection = (int)(xmov / Mathf.Abs(xmov));
+
+        if (newDirection == facingDirection)
+            return facingDirection;
+
+        // flip character if necessary and return (and set) new direction value
+        transform.localScale = new Vector3(newDirection, 1, 1);
+        return facingDirection = newDirection;
     }
 }

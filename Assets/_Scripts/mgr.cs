@@ -26,18 +26,18 @@ public class mgr : MonoBehaviour
         int soldier_count = 0;
         int knight_count = 0;
         foreach(Transform sp in guardSpawnPoints){
-            Debug.LogError($"SpawnPoint {sp.name}");
+            Debug.LogWarning($"SpawnPoint {sp.name}");
             GameObject guard = null;
             if(sp.CompareTag("Knight")){
                 guard = Instantiate(knightPrefab, sp.position, Quaternion.identity);
                 guard.name = $"Knight_{knight_count}";
                 knight_count++;
-                Debug.LogError($"Spawned {guard.name}");
+                Debug.LogWarning($"Spawned {guard.name}");
             }else if(sp.CompareTag("Soldier")){
                 guard = Instantiate(soldierPrefab, sp.position, Quaternion.identity);
                 guard.name = $"Soldier_{soldier_count}";
                 soldier_count++;
-                Debug.LogError($"Spawned {guard.name}");
+                Debug.LogWarning($"Spawned {guard.name}");
             }else{
                 Debug.LogError("NO TAG");
             }

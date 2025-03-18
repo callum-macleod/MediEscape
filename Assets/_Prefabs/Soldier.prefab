@@ -214,6 +214,15 @@ MonoBehaviour:
   target: {fileID: 0}
   drawGizmos: 1
   STATE: 
+  spriteRenderers:
+  - {fileID: 6828459973695509382}
+  - {fileID: 1293001085105192664}
+  - {fileID: 1726535941766441142}
+  - {fileID: 2810422239073565952}
+  - {fileID: 363973885659941401}
+  - {fileID: 7246251948547088886}
+  - {fileID: 3644033678888341082}
+  rb: {fileID: 1137501413514892081}
 --- !u!1 &795126441766835366
 GameObject:
   m_ObjectHideFlags: 0
