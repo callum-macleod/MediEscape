@@ -68,6 +68,7 @@ public class GuardAI : MonoBehaviour
             lastKnownDirection = agent.velocity.normalized;
         
         if(target != null){
+            animator.SetTrigger("TrWalk");
             if(isPlayerInFOV() || isPlayerInProximity()){
                 targetEscaped = false;
                 wasInFOV = true;
@@ -208,14 +209,14 @@ public class GuardAI : MonoBehaviour
     {
         if(animator != null && !isAttacking){
             isAttacking = true;
-            animator.SetTrigger("Attack");
+            animator.SetTrigger("TrAttack");
 
             if(target != null){
                 // Deal damage
             }
+            Invoke("ResetAttack", 1f);
         }
 
-        Invoke("ResetAttack", 1f);
     }
 
     void ResetAttack() => isAttacking = false;
