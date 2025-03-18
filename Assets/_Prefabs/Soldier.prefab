@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 4577109394622819767}
   - component: {fileID: 7120973294210404686}
   - component: {fileID: 3762976951483308274}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Soldier
-  m_TagString: Untagged
+  m_TagString: Soldier
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,7 +77,7 @@ CapsuleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 448
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -205,9 +205,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eeca19aa89ba8d4abf16847e18e0e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 1679e40e0aa2dcb4ebf829fadc601666, type: 2}
   fovAngle: 60
-  fovRange: 5
-  proximityRadius: 3
   patrolAreaCenter: {fileID: 511768035115880648}
   patrolAreaRadius: 4
   minPatrolDistance: 2
@@ -225,7 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 98814752446213307}
   - component: {fileID: 2810422239073565952}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Front arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,7 +312,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4361581538478283579}
   - component: {fileID: 3644033678888341082}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Front leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1353138981391696286}
   - component: {fileID: 363973885659941401}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 204246210566504480}
   - component: {fileID: 6828459973695509382}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,7 +578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1934409760839377261}
   - component: {fileID: 7246251948547088886}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -666,7 +665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8483736831397412002}
   - component: {fileID: 1726535941766441142}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,7 +751,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 511768035115880648}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PatrolCentre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -784,7 +783,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6597189039174860974}
   - component: {fileID: 1293001085105192664}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -3,12 +3,14 @@ using UnityEngine.AI;
 
 public class GuardAI : MonoBehaviour
 {
+    public EnemyInfo enemyData;
+    
     [Header("Field of View (FOV)")]
     public float fovAngle = 60f;
-    public float fovRange = 4f;
+    private float fovRange;
 
-    [Header("Proximity Detection")]
-    public float proximityRadius = 3f;
+    // [Header("Proximity Detection")]
+    private float proximityRadius;
 
     [Header("Patrolling")]
     [SerializeField] public Transform patrolAreaCenter;
@@ -46,6 +48,10 @@ public class GuardAI : MonoBehaviour
             animator = GetComponent<Animator>();
 
         attackingRange = agent.stoppingDistance;
+
+        enemyData = Instantiate(enemyData);
+        fovRange = enemyData.FOVRange;
+        proximityRadius = enemyData.poximityRadius;
     }
 
     void FixedUpdate()
@@ -76,11 +82,7 @@ public class GuardAI : MonoBehaviour
 
     void Update()
     {
-        if(target == null){
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if(player != null)
-                target = player.transform;
-        }
+        
     }
 
     void SetTarget(Transform newTarget)
