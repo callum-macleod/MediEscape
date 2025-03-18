@@ -23,11 +23,12 @@ public class GuardAI : MonoBehaviour
     private int damage;
     private bool isAttacking = false;
 
+    [Header("Target")]
+    [SerializeField] public Transform target;
+
     [Header("Debug")]
     [SerializeField] private bool drawGizmos = false;
 
-    
-    private Transform target;
     private NavMeshAgent agent;
     private bool targetEscaped = false;
     private bool wasInFOV = false;
