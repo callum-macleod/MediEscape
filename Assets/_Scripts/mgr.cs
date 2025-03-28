@@ -16,16 +16,24 @@ public class mgr : MonoBehaviour
     [SerializeField] GameObject soldierPrefab;
     [SerializeField] GameObject knightPrefab;
     List<GameObject> guardRefs = new List<GameObject>();
+    [SerializeField] EnemyInfo soldierInfo;
+    [SerializeField] EnemyInfo knightInfo;
 
     [Header("Camera")]
     [SerializeField] CinemachineCamera cinemachineCamera;
 
+
+    [SerializeField] bool debugGuards = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        thiefRef = Instantiate(thiefPrefab, thiefSpawnPoint.position, Quaternion.identity);
-        thiefRef.name = "Thief";
+        if(!debugGuards){    
+            thiefRef = Instantiate(thiefPrefab, thiefSpawnPoint.position, Quaternion.identity);
+            thiefRef.name = "Thief";
+        }
         // cinemachine.Follow = thiefRef.transform;
+
         int soldier_count = 0;
         int knight_count = 0;
         foreach(Transform sp in guardSpawnPoints){
@@ -36,11 +44,21 @@ public class mgr : MonoBehaviour
                 guard.name = $"Knight_{knight_count}";
                 knight_count++;
                 Debug.LogWarning($"Spawned {guard.name}");
+                guardRefs.Add(guard);
+                GuardAI guardAI = guard.GetComponent<GuardAI>();
+                guardAI.target = thiefRef.transform;
+                guardAI.enemyData = knightInfo;
+                guardAI.patrolAreaCenter = sp.transform;
             }else if(sp.CompareTag("Soldier")){
                 guard = Instantiate(soldierPrefab, sp.position, Quaternion.identity);
                 guard.name = $"Soldier_{soldier_count}";
                 soldier_count++;
                 Debug.LogWarning($"Spawned {guard.name}");
+                guardRefs.Add(guard);
+                GuardAI guardAI = guard.GetComponent<GuardAI>();
+                guardAI.target = thiefRef.transform;
+                guardAI.enemyData = soldierInfo;
+                guardAI.patrolAreaCenter = sp.transform;
             }else{
                 Debug.LogError("NO TAG");
             }
