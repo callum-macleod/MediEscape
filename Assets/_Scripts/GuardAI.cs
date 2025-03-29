@@ -9,7 +9,7 @@ public class GuardAI : HealthyEntity
 {
     [Header("Enemy Data")]
     public EnemyInfo enemyData;
-    private GameObject itemHeld;
+    private ItemInfo itemHeld;
     private float enemyHealth;
     
     [Header("Field of View (FOV)")]
@@ -85,6 +85,14 @@ public class GuardAI : HealthyEntity
         guardManager.RegisterGuard(this);
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.K)){
+            Debug.LogWarning($"{gameObject.name} was killed by debug key!");
+            OnDeath();
+        }
+    }
+
     void FixedUpdate()
     {
         if(agent.velocity.sqrMagnitude > 0.01f)
@@ -109,11 +117,6 @@ public class GuardAI : HealthyEntity
             }else{
                 Patrol();
             }
-        }
-
-        if(Input.GetKeyDown(KeyCode.K)){
-            Debug.LogWarning($"{gameObject.name} was killed by debug key!");
-            OnDeath();
         }
 
         //Debug.Log($"Guard {transform.name} is in {STATE} state");
@@ -300,8 +303,23 @@ public class GuardAI : HealthyEntity
         isDead = true;
         agent.isStopped = true;
         animator.SetTrigger("die");
+        DropItem();
         Destroy(gameObject, 2f);
-        Instantiate(itemHeld, gameObject.transform);
+    }
+
+    void DropItem()
+    {
+        if (itemHeld != null)
+        {
+            Vector3 dropPosition = transform.position;
+            GameObject droppedItem = Instantiate(itemHeld.itemPrefab, dropPosition, Quaternion.identity);
+            PickupItem pickup = droppedItem.AddComponent<PickupItem>();
+            if(pickup != null)
+                pickup.SetItemInfo(Instantiate(enemyData.itemHeld));
+            Collider2D coll = droppedItem.GetComponent<Collider2D>();
+            coll.isTrigger = true;
+            Debug.Log("Item dropped!");
+        }
     }
     
     void OnDrawGizmos()
