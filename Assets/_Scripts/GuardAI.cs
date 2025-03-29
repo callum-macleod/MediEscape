@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -5,6 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class GuardAI : MonoBehaviour
 {
+    [Header("Enemy Data")]
     public EnemyInfo enemyData;
     
     [Header("Field of View (FOV)")]
@@ -20,6 +22,8 @@ public class GuardAI : MonoBehaviour
     [SerializeField] public float minPatrolDistance = 2f;
     [HideInInspector] public Transform[] waypoints;
     private int currentWaypoint;
+    private bool isPausing = false;
+    private float pauseDuration = 2f;
 
     [Header("Attacking")]
     private Animator animator;
@@ -30,14 +34,23 @@ public class GuardAI : MonoBehaviour
     [Header("Target")]
     [SerializeField] public Transform target;
 
+    [Header("Alert")]
+    [SerializeField] private float alertRadius = 10f;
+
     [Header("Debug")]
     [SerializeField] private bool drawGizmos = false;
 
     private NavMeshAgent agent;
     private bool targetEscaped = false;
     private bool wasInFOV = false;
+    private bool wasAlerted = false;
     private float searchTimer = 0f;
+    private float alertSearchTimer = 0f;
+    private float alertSearchDuration = 10f;
     private Vector2 lastKnownDirection = Vector2.right;
+    private GuardManager guardManager;
+    // private float lastAlertTime = -10f;
+    // private float coolDown = 5f;
     [HideInInspector] public string STATE;
 
 
@@ -45,6 +58,7 @@ public class GuardAI : MonoBehaviour
 
     Vector3 lastPos = Vector3.zero;
     int facingDirection = 1;
+
 
     void Start()
     {
@@ -60,6 +74,9 @@ public class GuardAI : MonoBehaviour
         enemyData = Instantiate(enemyData);
         fovRange = enemyData.FOVRange;
         proximityRadius = enemyData.poximityRadius;
+
+        guardManager = FindFirstObjectByType<GuardManager>();
+        guardManager.RegisterGuard(this);
     }
 
     void FixedUpdate()
@@ -75,14 +92,16 @@ public class GuardAI : MonoBehaviour
                 agent.SetDestination(target.position);
                 STATE = "CHASE";
 
+                Alert();
+
                 if(Vector3.Distance(transform.position, target.position) <= attackingRange)
                     Attack();
             }else if(wasInFOV && targetEscaped){
                 SearchForTarget();
-                STATE = "SEARCH";
+            }else if(wasAlerted){
+                HandleAlertSearch();
             }else{
                 Patrol();
-                STATE = "PATROL";
             }
         }
 
@@ -174,8 +193,9 @@ public class GuardAI : MonoBehaviour
 
     void Patrol()
     {
-        if(Vector3.Distance(transform.position, agent.destination) < 2f)
-            agent.SetDestination(GetRandomWaypoint());
+        if(!isPausing && Vector3.Distance(transform.position, agent.destination) < 2f)
+            StartCoroutine(PauseAtWaypoint());
+        STATE = "PATROL";
     }
 
     Vector2 GetRandomWaypoint()
@@ -190,9 +210,17 @@ public class GuardAI : MonoBehaviour
         return transform.position;
     }
 
+    IEnumerator PauseAtWaypoint()
+    {
+        isPausing = true;
+        yield return new WaitForSeconds(pauseDuration);
+        isPausing = false;
+        agent.SetDestination(GetRandomWaypoint());
+    }
+
     void SearchForTarget()
     {
-        float searchTimeLimit = 5f;
+        float searchTimeLimit = 10f;
         searchTimer += Time.deltaTime;
 
         if(searchTimer >= searchTimeLimit){
@@ -202,6 +230,7 @@ public class GuardAI : MonoBehaviour
             Patrol();
         }else{
             agent.SetDestination(target.position);
+            STATE = "SEARCH";
         }
     }
 
@@ -221,6 +250,38 @@ public class GuardAI : MonoBehaviour
 
     void ResetAttack() => isAttacking = false;
 
+    void Alert()
+    {
+        if(guardManager != null)
+            guardManager.AlertNearbyGuards(this, alertRadius);
+    }
+
+    public void SetAlertedPosition(Vector3 position)
+    {
+        agent.SetDestination(position);
+        STATE = "SEARCH";
+        targetEscaped = true;  // Ensure they don't immediately return to patrol
+        wasInFOV = false;       // Reset FOV status
+        searchTimer = 0f;        // Start search timer
+        wasAlerted = true;
+        alertSearchTimer = 0f;
+    }
+
+    void HandleAlertSearch()
+    {
+        if(wasAlerted){
+            alertSearchTimer += Time.deltaTime;
+
+            if(alertSearchTimer < alertSearchDuration)
+                STATE = "SEARCH";
+            else{
+                wasAlerted = false;
+                alertSearchTimer = 0f;
+                Patrol();
+            }
+        }
+    }
+    
     void OnDrawGizmos()
     {
         if (!drawGizmos) return;
@@ -245,6 +306,9 @@ public class GuardAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawRay(eyePosition, leftRayDirection * fovRange);
         Gizmos.DrawRay(eyePosition, rightRayDirection * fovRange);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, alertRadius);
     }
 
     int SetFacingDirection()
@@ -252,7 +316,7 @@ public class GuardAI : MonoBehaviour
         // calculate movement since last physics frame
         float xmov = lastPos.x - transform.position.x;
         lastPos = transform.position;
-        print(xmov);
+        // print(xmov);
         // if not moving horiztonally, change nothing.
         if (Mathf.Abs(xmov) <= 0.01)
             return facingDirection;

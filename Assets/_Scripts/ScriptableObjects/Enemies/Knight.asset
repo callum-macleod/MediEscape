@@ -17,5 +17,5 @@ MonoBehaviour:
   health: 10
   damage: 2
   FOVRange: 5
-  poximityArea: 3
+  poximityRadius: 3
   itemHeld: {fileID: 0}
