@@ -4,7 +4,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Thief : MonoBehaviour
+public class Thief : HealthyEntity
 {
     // COMPONENTS
     Animator _animator;

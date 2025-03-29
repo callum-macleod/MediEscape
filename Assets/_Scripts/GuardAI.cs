@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 
-public class GuardAI : MonoBehaviour
+public class GuardAI : HealthyEntity
 {
     [Header("Enemy Data")]
     public EnemyInfo enemyData;
