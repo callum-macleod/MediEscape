@@ -29,6 +29,18 @@ public class Thief : HealthyEntity
         }
     }
 
+    // hitbox of child object
+    EdgeCollider2D attackHitbox;
+    EdgeCollider2D AttackHitbox
+    {
+        get
+        {
+            if (attackHitbox == null)
+                attackHitbox = GetComponentInChildren<EdgeCollider2D>();
+            return attackHitbox;
+        }
+    }
+
     [SerializeField] List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
     // GENERAL PROPERTIES AND FIELDS
@@ -133,5 +145,12 @@ public class Thief : HealthyEntity
         currentAttackCooldown = attackCooldown;
         currentAttackCooldown += Time.deltaTime;  // ensures that `attacking` returns true immediately
         animator.SetTrigger("TrAttack");
+        AttackHitbox.enabled = true;
+        Invoke(nameof(test), 1);
+    }
+
+    void test()
+    {
+        AttackHitbox.enabled = false;
     }
 }

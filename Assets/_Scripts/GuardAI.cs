@@ -105,7 +105,7 @@ public class GuardAI : HealthyEntity
             }
         }
 
-        Debug.Log($"Guard {transform.name} is in {STATE} state");
+        //Debug.Log($"Guard {transform.name} is in {STATE} state");
 
         SetFacingDirection();
     }

@@ -4,23 +4,25 @@ public class HealthyEntity : MonoBehaviour
 {
     [SerializeField] protected float maxHealth = 1;
 
-    protected float currentHealth;
+    protected float currentHealth = float.MaxValue;
     public float CurrentHealth {  get { return currentHealth; } }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentHealth = maxHealth;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentHealth == float.MaxValue)
+            currentHealth = maxHealth;
     }
 
-    protected void RecieveDamage(float damage)
+    public void RecieveDamage(float damage)
     {
+        print($"Recieved {damage}");
         currentHealth -= damage;
         CheckIfReadyToDie();
     }
@@ -34,6 +36,6 @@ public class HealthyEntity : MonoBehaviour
     }
     protected void Die()
     {
-
+        print($"{name}: Dying");
     }
 }
