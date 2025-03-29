@@ -31,7 +31,7 @@ public class HealthyEntity : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if (currentHealth == float.MaxValue)
             currentHealth = maxHealth;

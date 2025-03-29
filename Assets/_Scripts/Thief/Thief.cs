@@ -65,8 +65,10 @@ public class Thief : HealthyEntity
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (Input.GetKeyDown(KeyCode.Space))
             animator.SetTrigger("TrHurt");
         if (Input.GetKey(KeyCode.Mouse0) || attackBuffered)

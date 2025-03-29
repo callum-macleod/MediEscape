@@ -31,7 +31,7 @@ public class GuardAI : HealthyEntity
     [Header("Attacking")]
     private Animator animator;
     private float attackingRange;
-    private int damage;
+    private int damage = 101;
     private bool isAttacking = false;
 
     [Header("Target")]
@@ -83,6 +83,11 @@ public class GuardAI : HealthyEntity
 
         guardManager = FindFirstObjectByType<GuardManager>();
         guardManager.RegisterGuard(this);
+    }
+
+    protected override void Update()
+    {
+        base.Update();
     }
 
     void FixedUpdate()
@@ -252,9 +257,9 @@ public class GuardAI : HealthyEntity
             ChangeAnimation(AnimationTriggers.Attack);
 
             if(target != null){
-                // Deal damage
+                target.GetComponent<HealthyEntity>().RecieveDamage(damage);
             }
-            Invoke("ResetAttack", 1f);
+            Invoke(nameof(ResetAttack), 1f);
         }
 
     }
