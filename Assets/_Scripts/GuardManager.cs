@@ -22,7 +22,7 @@ public class GuardManager : MonoBehaviour
                 Debug.LogWarning($"{guard.name} was alerted by {alertingGuard.name}");
                 guard.target = alertingGuard.target;
                 guard.SetAlertedPosition(alertingGuard.target.position);
-                guard.STATE = "ALERTED";
+                guard.ChangeState(GuardState.ALERTED);
             }
         }
     }

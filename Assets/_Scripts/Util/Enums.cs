@@ -12,3 +12,11 @@ public enum Layers
     Walls,
     Enemies
 }
+
+public enum GuardState
+{
+    PATROL = 0,
+    ALERTED,
+    CHASE,
+    SEARCH
+}

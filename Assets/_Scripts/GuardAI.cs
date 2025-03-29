@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -51,7 +52,7 @@ public class GuardAI : HealthyEntity
     private GuardManager guardManager;
     // private float lastAlertTime = -10f;
     // private float coolDown = 5f;
-    [HideInInspector] public string STATE;
+    [HideInInspector] public GuardState STATE;
 
 
     [SerializeField] List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
@@ -90,7 +91,7 @@ public class GuardAI : HealthyEntity
                 targetEscaped = false;
                 wasInFOV = true;
                 agent.SetDestination(target.position);
-                STATE = "CHASE";
+                ChangeState(GuardState.CHASE);
 
                 Alert();
 
@@ -195,7 +196,7 @@ public class GuardAI : HealthyEntity
     {
         if(!isPausing && Vector3.Distance(transform.position, agent.destination) < 2f)
             StartCoroutine(PauseAtWaypoint());
-        STATE = "PATROL";
+        ChangeState(GuardState.PATROL);
     }
 
     Vector2 GetRandomWaypoint()
@@ -230,7 +231,7 @@ public class GuardAI : HealthyEntity
             Patrol();
         }else{
             agent.SetDestination(target.position);
-            STATE = "SEARCH";
+            ChangeState(GuardState.SEARCH);
         }
     }
 
@@ -259,7 +260,7 @@ public class GuardAI : HealthyEntity
     public void SetAlertedPosition(Vector3 position)
     {
         agent.SetDestination(position);
-        STATE = "SEARCH";
+        ChangeState(GuardState.SEARCH);
         targetEscaped = true;  // Ensure they don't immediately return to patrol
         wasInFOV = false;       // Reset FOV status
         searchTimer = 0f;        // Start search timer
@@ -273,7 +274,7 @@ public class GuardAI : HealthyEntity
             alertSearchTimer += Time.deltaTime;
 
             if(alertSearchTimer < alertSearchDuration)
-                STATE = "SEARCH";
+                STATE = GuardState.SEARCH;
             else{
                 wasAlerted = false;
                 alertSearchTimer = 0f;
@@ -330,5 +331,25 @@ public class GuardAI : HealthyEntity
         // flip character if necessary and return (and set) new direction value
         transform.localScale = new Vector3(newDirection, 1, 1);
         return facingDirection = newDirection;
+    }
+
+    public bool ChangeState(GuardState state)
+    {
+        if (STATE == state)
+            return false;
+
+        STATE = state;
+
+        switch (STATE)
+        {
+            case GuardState.PATROL:
+            case GuardState.ALERTED:
+            case GuardState.CHASE:
+            case GuardState.SEARCH:
+                animator.SetTrigger("TrWalk");
+                break;
+        }
+
+        return true;
     }
 }

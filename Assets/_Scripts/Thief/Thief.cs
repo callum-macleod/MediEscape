@@ -146,10 +146,10 @@ public class Thief : HealthyEntity
         currentAttackCooldown += Time.deltaTime;  // ensures that `attacking` returns true immediately
         animator.SetTrigger("TrAttack");
         attackHitbox.enabled = true;
-        Invoke(nameof(test), 1);
+        Invoke(nameof(DisableAttackHitbox), 1);
     }
 
-    void test()
+    void DisableAttackHitbox()
     {
         attackHitbox.enabled = false;
     }
