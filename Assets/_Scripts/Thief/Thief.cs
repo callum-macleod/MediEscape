@@ -4,7 +4,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Thief : MonoBehaviour
+public class Thief : HealthyEntity
 {
     // COMPONENTS
     Animator _animator;
@@ -26,6 +26,18 @@ public class Thief : MonoBehaviour
             if (_rigidBody == null)
                 _rigidBody = GetComponent<Rigidbody2D>();
             return _rigidBody;
+        }
+    }
+
+    // hitbox of child object
+    EdgeCollider2D _attackHitbox;
+    EdgeCollider2D attackHitbox
+    {
+        get
+        {
+            if (_attackHitbox == null)
+                _attackHitbox = GetComponentInChildren<EdgeCollider2D>();
+            return _attackHitbox;
         }
     }
 
@@ -133,5 +145,12 @@ public class Thief : MonoBehaviour
         currentAttackCooldown = attackCooldown;
         currentAttackCooldown += Time.deltaTime;  // ensures that `attacking` returns true immediately
         animator.SetTrigger("TrAttack");
+        attackHitbox.enabled = true;
+        Invoke(nameof(DisableAttackHitbox), 1);
+    }
+
+    void DisableAttackHitbox()
+    {
+        attackHitbox.enabled = false;
     }
 }
