@@ -30,14 +30,14 @@ public class Thief : HealthyEntity
     }
 
     // hitbox of child object
-    EdgeCollider2D attackHitbox;
-    EdgeCollider2D AttackHitbox
+    EdgeCollider2D _attackHitbox;
+    EdgeCollider2D attackHitbox
     {
         get
         {
-            if (attackHitbox == null)
-                attackHitbox = GetComponentInChildren<EdgeCollider2D>();
-            return attackHitbox;
+            if (_attackHitbox == null)
+                _attackHitbox = GetComponentInChildren<EdgeCollider2D>();
+            return _attackHitbox;
         }
     }
 
@@ -145,12 +145,12 @@ public class Thief : HealthyEntity
         currentAttackCooldown = attackCooldown;
         currentAttackCooldown += Time.deltaTime;  // ensures that `attacking` returns true immediately
         animator.SetTrigger("TrAttack");
-        AttackHitbox.enabled = true;
+        attackHitbox.enabled = true;
         Invoke(nameof(test), 1);
     }
 
     void test()
     {
-        AttackHitbox.enabled = false;
+        attackHitbox.enabled = false;
     }
 }

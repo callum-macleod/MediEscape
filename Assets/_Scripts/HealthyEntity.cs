@@ -7,6 +7,22 @@ public class HealthyEntity : MonoBehaviour
     protected float currentHealth = float.MaxValue;
     public float CurrentHealth {  get { return currentHealth; } }
 
+
+
+    // COMPONENTS
+    Animator _animator;
+    Animator animator
+    {
+        get
+        {
+            if (_animator == null)
+                _animator = GetComponent<Animator>();
+            return _animator;
+        }
+    }
+
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,6 +40,7 @@ public class HealthyEntity : MonoBehaviour
     {
         print($"Recieved {damage}");
         currentHealth -= damage;
+        animator.SetTrigger("TrHurt");
         CheckIfReadyToDie();
     }
 
