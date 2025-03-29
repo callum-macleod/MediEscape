@@ -91,7 +91,7 @@ public class GuardAI : HealthyEntity
             lastKnownDirection = agent.velocity.normalized;
         
         if(target != null){
-            animator.SetTrigger("TrWalk");
+            //animator.SetTrigger("TrWalk");
             if(isPlayerInFOV() || isPlayerInProximity()){
                 targetEscaped = false;
                 wasInFOV = true;
@@ -284,7 +284,7 @@ public class GuardAI : HealthyEntity
             alertSearchTimer += Time.deltaTime;
 
             if(alertSearchTimer < alertSearchDuration)
-                STATE = GuardState.SEARCH;
+                ChangeState(GuardState.SEARCH);
             else{
                 wasAlerted = false;
                 alertSearchTimer = 0f;
@@ -356,8 +356,11 @@ public class GuardAI : HealthyEntity
 
     public bool ChangeState(GuardState state)
     {
-        if (STATE == state)
+        if (isPausing)
+        { 
+            animator.SetTrigger("TrIdle");
             return false;
+        }
 
         STATE = state;
 
