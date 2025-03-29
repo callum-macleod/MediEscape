@@ -6,6 +6,7 @@ public class HealthyEntity : MonoBehaviour
 
     protected float currentHealth = float.MaxValue;
     public float CurrentHealth {  get { return currentHealth; } }
+    protected bool dead = false;
 
 
 
@@ -40,19 +41,26 @@ public class HealthyEntity : MonoBehaviour
     {
         print($"Recieved {damage}");
         currentHealth -= damage;
-        animator.SetTrigger("TrHurt");
-        CheckIfReadyToDie();
+
+        if (!CheckIfReadyToDie())
+            animator.SetTrigger("TrHurt");
     }
 
-    protected void CheckIfReadyToDie()
+    protected bool CheckIfReadyToDie()
     {
         if (currentHealth < 0)
         {
             Die();
+            return true;
         }
+
+        return false;
     }
     protected void Die()
     {
         print($"{name}: Dying");
+        animator.SetTrigger("TrDie");
+        dead = true;
+        Destroy(gameObject, 0.8f);
     }
 }

@@ -249,7 +249,7 @@ public class GuardAI : HealthyEntity
     {
         if(animator != null && !isAttacking){
             isAttacking = true;
-            animator.SetTrigger("TrAttack");
+            ChangeAnimation(AnimationTriggers.Attack);
 
             if(target != null){
                 // Deal damage
@@ -299,7 +299,7 @@ public class GuardAI : HealthyEntity
 
         isDead = true;
         agent.isStopped = true;
-        animator.SetTrigger("die");
+        ChangeAnimation(AnimationTriggers.Die);
         Destroy(gameObject, 2f);
         Instantiate(itemHeld, gameObject.transform);
     }
@@ -356,9 +356,13 @@ public class GuardAI : HealthyEntity
 
     public bool ChangeState(GuardState state)
     {
+        if (dead)
+            return false;
+
         if (isPausing)
         { 
-            animator.SetTrigger("TrIdle");
+            
+            ChangeAnimation(AnimationTriggers.Idle);
             return false;
         }
 
@@ -370,10 +374,16 @@ public class GuardAI : HealthyEntity
             case GuardState.ALERTED:
             case GuardState.CHASE:
             case GuardState.SEARCH:
-                animator.SetTrigger("TrWalk");
+                ChangeAnimation(AnimationTriggers.Walk);
                 break;
         }
 
         return true;
+    }
+
+    private void ChangeAnimation(AnimationTriggers anim)
+    {
+        if (dead) return;
+        animator.SetTrigger($"Tr{anim}");
     }
 }

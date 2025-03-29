@@ -20,3 +20,12 @@ public enum GuardState
     CHASE,
     SEARCH
 }
+
+public enum AnimationTriggers
+{
+    Idle = 0,
+    Walk,
+    Attack,
+    Hurt,
+    Die,
+}

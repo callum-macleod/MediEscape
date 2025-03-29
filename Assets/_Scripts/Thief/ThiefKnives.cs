@@ -19,7 +19,6 @@ public class ThiefKnives : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("knifed");
         if (collision.gameObject.layer != (int)Layers.Enemies)
             return;
 
