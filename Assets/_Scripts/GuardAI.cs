@@ -8,6 +8,8 @@ public class GuardAI : MonoBehaviour
 {
     [Header("Enemy Data")]
     public EnemyInfo enemyData;
+    private GameObject itemHeld;
+    private float enemyHealth;
     
     [Header("Field of View (FOV)")]
     public float fovAngle = 60f;
@@ -44,6 +46,7 @@ public class GuardAI : MonoBehaviour
     private bool targetEscaped = false;
     private bool wasInFOV = false;
     private bool wasAlerted = false;
+    private bool isDead = false;
     private float searchTimer = 0f;
     private float alertSearchTimer = 0f;
     private float alertSearchDuration = 10f;
@@ -74,6 +77,8 @@ public class GuardAI : MonoBehaviour
         enemyData = Instantiate(enemyData);
         fovRange = enemyData.FOVRange;
         proximityRadius = enemyData.poximityRadius;
+        if(enemyData.itemHeld != null)
+            itemHeld = enemyData.itemHeld;
 
         guardManager = FindFirstObjectByType<GuardManager>();
         guardManager.RegisterGuard(this);
@@ -103,6 +108,11 @@ public class GuardAI : MonoBehaviour
             }else{
                 Patrol();
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.K)){
+            Debug.LogWarning($"{gameObject.name} was killed by debug key!");
+            OnDeath();
         }
 
         Debug.Log($"Guard {transform.name} is in {STATE} state");
@@ -280,6 +290,17 @@ public class GuardAI : MonoBehaviour
                 Patrol();
             }
         }
+    }
+
+    public void OnDeath()
+    {
+        if(isDead) return;
+
+        isDead = true;
+        agent.isStopped = true;
+        animator.SetTrigger("die");
+        Destroy(gameObject, 2f);
+        Instantiate(itemHeld, gameObject.transform);
     }
     
     void OnDrawGizmos()
