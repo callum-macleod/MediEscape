@@ -449,7 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 940291f31cbe0b54491ba2b78193acaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 10
   spriteRenderers:
   - {fileID: 3439346278451372174}
   - {fileID: 116892850032529774}
@@ -1087,4 +1087,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857382e5d817bdd4e89703aa0f39562b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 40
+  damage: 1

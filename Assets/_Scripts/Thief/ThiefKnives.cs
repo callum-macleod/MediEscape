@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ThiefKnives : MonoBehaviour
 {
-    public float damage = 40;
+    public float damage = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

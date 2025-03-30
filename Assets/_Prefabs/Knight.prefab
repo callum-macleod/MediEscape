@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eeca19aa89ba8d4abf16847e18e0e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 2
   enemyData: {fileID: 11400000, guid: 4bd08384499d67a41bb38ed99e2f55fe, type: 2}
   fovAngle: 60
   patrolAreaCenter: {fileID: 511768035115880648, guid: c73eac49fee843f42819309b7fa5a5cc, type: 3}
@@ -476,7 +476,7 @@ MonoBehaviour:
   target: {fileID: 0}
   alertRadius: 10
   drawGizmos: 1
-  STATE: 
+  STATE: 0
   spriteRenderers:
   - {fileID: 5670126423813973290}
   - {fileID: 3638100365902257589}
