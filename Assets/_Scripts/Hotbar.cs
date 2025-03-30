@@ -45,9 +45,10 @@ public class Hotbar : MonoBehaviour
     {
         if (items[selectedIndex] != null && items[selectedIndex].isUsable)
         {
-            if (items[selectedIndex] is HealthPotion potion)
+            //checks if item is healthpotion
+            if (items[selectedIndex] is HealthPotion hpotion)
             {
-                potion.Use(playerHealth); //checks if item is healthpotion
+                hpotion.Use(playerHealth); 
             }
             else
             {
