@@ -19,4 +19,5 @@ MonoBehaviour:
   FOVRange: 3
   poximityRadius: 2
   bribeable: 1
-  itemHeld: {fileID: 11400000, guid: 085b2ee89ad59f64dadd7c5aabdb7c65, type: 2}
+  friendly: 0
+  itemHeld: {fileID: 0}
