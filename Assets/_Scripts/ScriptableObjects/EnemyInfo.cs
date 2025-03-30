@@ -12,6 +12,10 @@ public class EnemyInfo : ScriptableObject
     public int damage;
     public float FOVRange;
     public float poximityRadius;
+    public bool bribeable;
+
+    [Header("Status")]
+    public bool friendly;
 
     [Header("Items")]
     public ItemInfo itemHeld;

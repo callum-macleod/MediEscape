@@ -18,7 +18,7 @@ public class ItemInfo : ScriptableObject
     public enum ItemType
     {
         Consumable,
-        Inventory,
+        Money,
         QuestItem
     }
 

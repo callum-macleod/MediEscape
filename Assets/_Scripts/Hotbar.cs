@@ -58,6 +58,12 @@ public class Hotbar : MonoBehaviour
         }
     }
 
+    public void GiveItem(int idx)
+    {
+        items[idx] = null;
+        UpdateHotbarUI();
+    }
+
 
     public void UpdateHotbarUI()
     {
