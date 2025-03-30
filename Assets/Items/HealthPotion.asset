@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: HealthPotion
   m_EditorClassIdentifier: 
   itemName: healthpotion
-  icon: {fileID: -794116353344462730, guid: f7b37b91088c7d44b98c5e710477bd39, type: 3}
+  description: 
+  itemIcon: {fileID: 0}
+  maxStack: 1
+  itemType: 0
+  value: 2
+  itemPrefab: {fileID: 0}
   isUsable: 1
   healAmount: 2

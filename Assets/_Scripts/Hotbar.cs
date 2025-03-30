@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class Hotbar : MonoBehaviour
 {
     public List<ItemInfo> items = new List<ItemInfo>(4); // Holds the items in the hotbar
-    public Image[] slotImages;         // item sprite replace hotbar
+    public Image[] slotImages; //hotbar image
+    public Image[] slotIcons; // placeholder for items
     public int selectedIndex = 0;
 
     //scale for selected slots
@@ -63,9 +64,20 @@ public class Hotbar : MonoBehaviour
         for (int i = 0; i < slotImages.Length; i++)
         {
             if (items[i] != null)
-                slotImages[i].sprite = items[i].itemIcon;
+            {
+                slotIcons[i].sprite = items[i].itemIcon;
+                slotIcons[i].enabled = true;
+            }
             else
-                slotImages[i].sprite = null;
+            {
+                slotIcons[i].sprite = null;
+                slotIcons[i].enabled = false; // Hide if no item
+            }
+
+            //if (items[i] != null)
+            //    slotImages[i].sprite = items[i].itemIcon;
+            //else
+            //    slotImages[i].sprite = null;
 
 
             // Scale selected slot
