@@ -13,11 +13,21 @@ public class ItemInfo : ScriptableObject
     public ItemType itemType;
     public int value;
     public GameObject itemPrefab;
+    public bool isUsable;
 
     public enum ItemType
     {
         Consumable,
         Inventory,
         QuestItem
+    }
+
+    public void Use(PlayerHealth playerHealth)
+    {
+        if (playerHealth != null && itemType == ItemType.Consumable)
+        {
+            Debug.Log($"Healing for {value} HP");
+            playerHealth.Heal(value);
+        }
     }
 }

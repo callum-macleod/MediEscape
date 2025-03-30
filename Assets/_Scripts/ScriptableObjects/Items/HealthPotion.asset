@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28e5e0ff0d6cce043bb846239a119cd7, type: 3}
-  m_Name: MoneyBag
+  m_Name: HealthPotion
   m_EditorClassIdentifier: 
-  itemName: Money
-  description: Contains money for trading and bribes
-  itemIcon: {fileID: 801322620620196824, guid: f7b37b91088c7d44b98c5e710477bd39, type: 3}
+  itemName: HealthPotion
+  description: Adds 2 health
+  itemIcon: {fileID: -794116353344462730, guid: f7b37b91088c7d44b98c5e710477bd39, type: 3}
   maxStack: 1
-  itemType: 1
-  value: 50
-  itemPrefab: {fileID: 3347543616739314971, guid: 95999906f0dbba445ad8f34f2dd8d3fb, type: 3}
+  itemType: 0
+  value: 2
+  itemPrefab: {fileID: 3347543616739314971, guid: f89ccd154c2a9004b857b77bf70c8f69, type: 3}
   isUsable: 1

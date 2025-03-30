@@ -318,7 +318,7 @@ public class GuardAI : HealthyEntity
                 pickup.SetItemInfo(Instantiate(enemyData.itemHeld));
             Collider2D coll = droppedItem.GetComponent<Collider2D>();
             coll.isTrigger = true;
-            Debug.Log("Item dropped!");
+            // Debug.Log("Item dropped!");
         }
     }
     

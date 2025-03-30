@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class Hotbar : MonoBehaviour
 {
-    public Item[] items = new Item[4]; // Holds the items in the hotbar
+    public List<ItemInfo> items = new List<ItemInfo>(4); // Holds the items in the hotbar
     public Image[] slotImages;         // item sprite replace hotbar
     public int selectedIndex = 0;
 
@@ -46,20 +47,12 @@ public class Hotbar : MonoBehaviour
         if (items[selectedIndex] != null && items[selectedIndex].isUsable)
         {
             //checks if item is healthpotion
-            if (items[selectedIndex] is HealthPotion hpotion)
+            if (items[selectedIndex].itemType == ItemInfo.ItemType.Consumable)
             {
-                hpotion.Use(playerHealth); 
-            }
-            else
-            {
-                items[selectedIndex].Use(); 
+                items[selectedIndex].Use(playerHealth); 
             }
 
-            
-            
             items[selectedIndex] = null;
-            
-
             UpdateHotbarUI();
         }
     }
@@ -70,7 +63,7 @@ public class Hotbar : MonoBehaviour
         for (int i = 0; i < slotImages.Length; i++)
         {
             if (items[i] != null)
-                slotImages[i].sprite = items[i].icon;
+                slotImages[i].sprite = items[i].itemIcon;
             else
                 slotImages[i].sprite = null;
 
@@ -83,24 +76,38 @@ public class Hotbar : MonoBehaviour
 
         }
 
+        // Debug.Log("Updated Hotbar");
+    }
 
-        
-    
-}
-
-    public void AddItemToHotbar(Item item)
+    public void AddItemToHotbar(ItemInfo item)
     {
-        for (int i = 0; i < items.Length; i++)
+        if (HasFreeSlot())
         {
-            if (items[i] == null)
+            // Find the first available slot
+            for (int i = 0; i < items.Count; i++)
             {
-                items[i] = item;
-                UpdateHotbarUI();
-                return;
+                if (items[i] == null)
+                {
+                    items[i] = item;
+                    Debug.Log($"Added {item.name} to hotbar at slot {i}");  // Confirm addition
+                    UpdateHotbarUI();
+                    return;  // Exit as the item has been added
+                }
             }
         }
+        else
+        {
+            Debug.Log("Hotbar full");
+        }
+    }
 
-        Debug.Log("Hotbar full");
+    public bool HasFreeSlot()
+    {
+        foreach (var item in items)
+        {
+            if (item == null) return true;  // Found a free slot
+        }
+        return false;  // No free slot
     }
 }
 
