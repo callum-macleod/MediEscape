@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - RequiresDrawOrder
+  - Soldier
+  - Knight
   layers:
   - Default
   - TransparentFX
@@ -12,9 +14,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - Walls
+  - Enemies
   - 
   - 
   - 

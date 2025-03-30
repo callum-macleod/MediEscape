@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b55808685d222bf4fa26ee488ca47872, type: 3}
+  m_Name: Soldier
+  m_EditorClassIdentifier: 
+  name: Soldier
+  prefab: {fileID: 82580113037999381, guid: c73eac49fee843f42819309b7fa5a5cc, type: 3}
+  health: 5
+  damage: 1
+  FOVRange: 3
+  poximityRadius: 2
+  itemHeld: {fileID: 3347543616739314971, guid: 95999906f0dbba445ad8f34f2dd8d3fb, type: 3}
