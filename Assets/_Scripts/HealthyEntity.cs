@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class HealthyEntity : MonoBehaviour
 {
-    [SerializeField] protected float maxHealth = 1;
+    [SerializeField] protected int maxHealth = 1;
+    public int MaxHealth { get { return maxHealth; } }
 
-    protected float currentHealth = float.MaxValue;
-    public float CurrentHealth {  get { return currentHealth; } }
+    protected int currentHealth { get; set; } = 69;
+    public int CurrentHealth {  get { return currentHealth; } }
     protected bool dead = false;
 
 
@@ -33,17 +34,26 @@ public class HealthyEntity : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (currentHealth == float.MaxValue)
+        if (currentHealth == int.MaxValue)
             currentHealth = maxHealth;
+         if (currentHealth < 0)
+            print(currentHealth);
     }
 
-    public void RecieveDamage(float damage)
+    public void RecieveDamage(int damage)
     {
         print($"Recieved {damage}");
         currentHealth -= damage;
 
         if (!CheckIfReadyToDie())
             animator.SetTrigger("TrHurt");
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Min(currentHealth, maxHealth); // Clamp to max
+        Debug.Log("Healed! Current health: " + currentHealth);
     }
 
     protected bool CheckIfReadyToDie()

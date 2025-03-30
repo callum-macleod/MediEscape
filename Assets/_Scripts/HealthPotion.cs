@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthPotion : Item
 {
     public int healAmount = 2;
-    public void Use(PlayerHealth playerHealth)
+    public void Use(HealthyEntity playerHealth)
     {
         if (playerHealth != null)
         {

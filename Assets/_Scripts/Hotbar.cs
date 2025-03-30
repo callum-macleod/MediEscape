@@ -12,7 +12,7 @@ public class Hotbar : MonoBehaviour
     public float selectedScale = 1.05f;           
     public float normalScale = 1f;
 
-    public PlayerHealth playerHealth; // Drag player in Inspector
+    public HealthyEntity playerHealth; // Drag player in Inspector
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

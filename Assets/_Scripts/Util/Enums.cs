@@ -5,7 +5,7 @@ public enum Layers
     Default = 0,
     TransparentFX,
     IgnoreRaycast,
-    UNUSEDLAYER,
+    Door,
     Water,
     UI,
     Player,

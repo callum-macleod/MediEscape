@@ -6,7 +6,7 @@ using UnityEngine;
 public class HealthMgr : MonoBehaviour
 {
     public GameObject heartPrefab;
-    public PlayerHealth playerHealth;
+    public HealthyEntity playerHealth;
     List<HealthHeart> hearts = new List<HealthHeart>();
 
     public void Start()
@@ -23,8 +23,8 @@ public class HealthMgr : MonoBehaviour
     {
         ClearHearts();
         //determine how many hearts to draw based on max hp
-        float maxHealthReamainder = playerHealth.maxHealth % 2;
-        int heartsToMake = (int)((playerHealth.maxHealth / 2) + maxHealthReamainder);
+        float maxHealthReamainder = playerHealth.MaxHealth % 2;
+        int heartsToMake = (int)((playerHealth.MaxHealth / 2) + maxHealthReamainder);
 
         for(int i =0; i<heartsToMake; i++)
         {
@@ -33,7 +33,7 @@ public class HealthMgr : MonoBehaviour
 
         for (int i = 0; i < hearts.Count; i++)
         {
-            int hearStatusRemainder = Mathf.Clamp(playerHealth.playerHealth - (i * 2), 0, 2);
+            int hearStatusRemainder = Mathf.Clamp(playerHealth.CurrentHealth - (i * 2), 0, 2);
             hearts[i].setHeartImage((HeartStatus)hearStatusRemainder);
         }
 
