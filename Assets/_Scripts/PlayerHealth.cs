@@ -8,4 +8,11 @@ public class PlayerHealth : MonoBehaviour
     {
         playerHealth = maxHealth;
     }
+
+    public void Heal(int amount)
+    {
+        playerHealth += amount;
+        playerHealth = Mathf.Min(playerHealth, maxHealth); // Clamp to max
+        Debug.Log("Healed! Current health: " + playerHealth);
+    }
 }
