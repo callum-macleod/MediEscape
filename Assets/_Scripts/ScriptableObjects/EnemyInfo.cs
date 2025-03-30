@@ -14,5 +14,5 @@ public class EnemyInfo : ScriptableObject
     public float poximityRadius;
 
     [Header("Items")]
-    public GameObject itemHeld;
+    public ItemInfo itemHeld;
 }
