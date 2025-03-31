@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 816009352841611831}
   - component: {fileID: 8693998693911076669}
   - component: {fileID: 5181052617366824414}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: UnlockedDoor
   m_TagString: RequiresDrawOrder
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 2313506924922549561}
   - component: {fileID: 1359920900183409952}
   - component: {fileID: 8916975812104706034}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: LockedDoor
   m_TagString: RequiresDrawOrder
   m_Icon: {fileID: 0}

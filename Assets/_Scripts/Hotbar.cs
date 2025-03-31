@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class Hotbar : MonoBehaviour
@@ -15,11 +17,12 @@ public class Hotbar : MonoBehaviour
     public float normalScale = 1f;
 
     public HealthyEntity playerHealth; // Drag player in Inspector
+    private GameObject player;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthyEntity>();
+        player = GameObject.FindGameObjectWithTag("Player");
         UpdateHotbarUI();
     }
 
@@ -54,14 +57,45 @@ public class Hotbar : MonoBehaviour
         if (items[selectedIndex] != null && items[selectedIndex].isUsable)
         {
             //checks if item is healthpotion
-            if (items[selectedIndex].itemType == ItemInfo.ItemType.Consumable)
+            if (items[selectedIndex] is HealthPotion hp)
             {
-                items[selectedIndex].Use(playerHealth); 
+                hp.Use(playerHealth);
             }
+            else if (items[selectedIndex] is StealthPotion sp)
+            {
+                StartCoroutine(EnableStealth(player, sp.timerLimit));
+            }
+            else if (items[selectedIndex] is SpeedPotion speed)
+            {
+                StartCoroutine(EnableSpeed(player, speed.timerLimit));
+            }
+            else if (items[selectedIndex] is Key k)
+                k.Use();
 
             items[selectedIndex] = null;
             UpdateHotbarUI();
         }
+    }
+
+    private IEnumerator EnableStealth(GameObject player, float timerLimit)
+    {
+        player.layer = LayerMask.NameToLayer("Default");
+
+        yield return new WaitForSeconds(timerLimit);
+
+        player.layer = LayerMask.NameToLayer("Player");
+    }
+
+    private IEnumerator EnableSpeed(GameObject player, float timerLimit)
+    {
+        float ogspeed = player.GetComponent<Thief>().moveSpeed;
+        float newSpeed = (player.GetComponent<Thief>().moveSpeed) +2;
+
+        player.GetComponent<Thief>().moveSpeed = newSpeed;
+
+        yield return new WaitForSeconds(timerLimit);
+
+        player.GetComponent<Thief>().moveSpeed = ogspeed;
     }
 
     public void GiveItem(int idx)
