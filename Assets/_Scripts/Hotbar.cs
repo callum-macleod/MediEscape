@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class Hotbar : MonoBehaviour
@@ -16,7 +18,6 @@ public class Hotbar : MonoBehaviour
 
     public HealthyEntity playerHealth; // Drag player in Inspector
     private GameObject player;
-    private float timer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -62,8 +63,11 @@ public class Hotbar : MonoBehaviour
             }
             else if (items[selectedIndex] is StealthPotion sp)
             {
-                timer += Time.deltaTime;
-                sp.Use(player);
+                StartCoroutine(EnableStealth(player, sp.timerLimit));
+            }
+            else if (items[selectedIndex] is SpeedPotion speed)
+            {
+                StartCoroutine(EnableSpeed(player, speed.timerLimit));
             }
             else if (items[selectedIndex] is Key k)
                 k.Use();
@@ -71,6 +75,27 @@ public class Hotbar : MonoBehaviour
             items[selectedIndex] = null;
             UpdateHotbarUI();
         }
+    }
+
+    private IEnumerator EnableStealth(GameObject player, float timerLimit)
+    {
+        player.layer = LayerMask.NameToLayer("Default");
+
+        yield return new WaitForSeconds(timerLimit);
+
+        player.layer = LayerMask.NameToLayer("Player");
+    }
+
+    private IEnumerator EnableSpeed(GameObject player, float timerLimit)
+    {
+        float ogspeed = player.GetComponent<Thief>().moveSpeed;
+        float newSpeed = (player.GetComponent<Thief>().moveSpeed) +2;
+
+        player.GetComponent<Thief>().moveSpeed = newSpeed;
+
+        yield return new WaitForSeconds(timerLimit);
+
+        player.GetComponent<Thief>().moveSpeed = ogspeed;
     }
 
     public void GiveItem(int idx)

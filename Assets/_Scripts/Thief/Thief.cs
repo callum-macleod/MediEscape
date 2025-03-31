@@ -59,7 +59,7 @@ public class Thief : HealthyEntity
 
     // GENERAL PROPERTIES AND FIELDS
     Vector2 move;
-    float moveSpeed = 2.5f;
+    public float moveSpeed = 2.5f;
 
     int facingDirection = 1;
 
