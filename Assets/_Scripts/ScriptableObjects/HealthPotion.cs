@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HealthPotion", menuName = "Inventory/HealthPotion")]
+[CreateAssetMenu(fileName = "HealthPotion", menuName = "Consumable/HealthPotion")]
 
 public class HealthPotion : ItemInfo
 {

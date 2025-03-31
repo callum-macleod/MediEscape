@@ -22,12 +22,8 @@ public class ItemInfo : ScriptableObject
         QuestItem
     }
 
-    public void Use(HealthyEntity playerHealth)
+    public virtual void Use()
     {
-        if (playerHealth != null && itemType == ItemType.Consumable)
-        {
-            Debug.Log($"Healing for {value} HP");
-            playerHealth.Heal(value);
-        }
+        Debug.Log("Using item: " + itemName);
     }
 }
