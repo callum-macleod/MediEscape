@@ -831,10 +831,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guard: {fileID: 3762976951483308274}
-  bribeableIcon: {fileID: 7482667652216324306, guid: a844606543b9ff245a134bedbebb72ee, type: 3}
-  bribedIcon: {fileID: -2413806693520163455, guid: a7918be98bcf38b4cb0254cb231cf1af, type: 3}
   offset: {x: 0, y: 2.5, z: 0}
   iconRenderer: {fileID: 2076519726138540029}
+  patrolIcon: {fileID: 0}
+  chaseIcon: {fileID: 7482667652216324306, guid: a844606543b9ff245a134bedbebb72ee, type: 3}
+  searchIcon: {fileID: -2413806693520163455, guid: a7918be98bcf38b4cb0254cb231cf1af, type: 3}
+  bribeableIcon: {fileID: 7482667652216324306, guid: a844606543b9ff245a134bedbebb72ee, type: 3}
+  bribedIcon: {fileID: -2413806693520163455, guid: a7918be98bcf38b4cb0254cb231cf1af, type: 3}
+  patrolColor: {r: 1, g: 1, b: 1, a: 1}
+  chaseColor: {r: 1, g: 0, b: 0, a: 1}
+  searchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  bribeableColor: {r: 0, g: 1, b: 1, a: 1}
+  bribedColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!212 &2076519726138540029
 SpriteRenderer:
   m_ObjectHideFlags: 0
