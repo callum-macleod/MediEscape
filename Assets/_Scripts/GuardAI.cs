@@ -34,7 +34,7 @@ public class GuardAI : HealthyEntity
     [Header("Attacking")]
     private Animator animator;
     private float attackingRange;
-    private int damage = 101;
+    private int damage = 2;
     private bool isAttacking = false;
 
     [Header("Target")]

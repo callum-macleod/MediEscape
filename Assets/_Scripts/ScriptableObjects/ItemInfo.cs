@@ -22,7 +22,7 @@ public class ItemInfo : ScriptableObject
         QuestItem
     }
 
-    public void Use(PlayerHealth playerHealth)
+    public void Use(HealthyEntity playerHealth)
     {
         if (playerHealth != null && itemType == ItemType.Consumable)
         {
