@@ -1098,6 +1098,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6781424697917101064}
     m_Modifications:
+    - target: {fileID: 48984641700947276, guid: 1b567d6a6402e064aba1046ddcba6529, type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2480833855493699122, guid: 1b567d6a6402e064aba1046ddcba6529, type: 3}
       propertyPath: m_Name
       value: icon renderer
