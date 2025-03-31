@@ -41,6 +41,20 @@ public class Thief : HealthyEntity
         }
     }
 
+    // trigger hitbox for drawOrder
+    BoxCollider2D _draworderHitbox;
+    BoxCollider2D draworderHitbox
+    {
+        get
+        {
+            if (_draworderHitbox == null)
+                _draworderHitbox = GetComponentInChildren<BoxCollider2D>();
+            return _draworderHitbox;
+        }
+    }
+
+    
+
     [SerializeField] List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
     // GENERAL PROPERTIES AND FIELDS
@@ -116,10 +130,11 @@ public class Thief : HealthyEntity
         // while in contact with such walls:
         if (collision.tag == "RequiresDrawOrder")
         {
-            int tilemapOrder = collision.GetComponent<TilemapRenderer>().sortingOrder;  // get draw order
+            int tilemapOrder = collision.GetComponent<Renderer>().sortingOrder;  // get draw order
 
             // is wall above or below player?
-            if (collision.bounds.center.y > transform.position.y)
+            Vector3 collisionPoint = collision.ClosestPoint(draworderHitbox.bounds.center);
+            if (collisionPoint.y > draworderHitbox.bounds.center.y)
                 tilemapOrder++;
             else
                 tilemapOrder--;
