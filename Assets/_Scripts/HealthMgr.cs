@@ -11,8 +11,13 @@ public class HealthMgr : MonoBehaviour
 
     public void Start()
     {
-        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthyEntity>();
+        //playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthyEntity>();
         DrawHearts();
+    }
+
+    public void ConnectPlayer(HealthyEntity player)
+    {
+        playerHealth = player;
     }
 
     public void Update()

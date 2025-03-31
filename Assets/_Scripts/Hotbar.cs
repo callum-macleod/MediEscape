@@ -19,8 +19,13 @@ public class Hotbar : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthyEntity>();
+        //playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthyEntity>();
         UpdateHotbarUI();
+    }
+
+    public void ConnectPlayer(HealthyEntity player)
+    {
+        playerHealth = player;
     }
 
     // Update is called once per frame

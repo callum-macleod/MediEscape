@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eeca19aa89ba8d4abf16847e18e0e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 2
   enemyData: {fileID: 11400000, guid: 1679e40e0aa2dcb4ebf829fadc601666, type: 2}
   fovAngle: 60
   patrolAreaCenter: {fileID: 511768035115880648}
@@ -214,6 +214,7 @@ MonoBehaviour:
   waypoints: []
   target: {fileID: 0}
   alertRadius: 10
+  hotbar: {fileID: 0}
   drawGizmos: 0
   STATE: 0
   spriteRenderers:

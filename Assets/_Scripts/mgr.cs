@@ -24,6 +24,8 @@ public class mgr : MonoBehaviour
 
 
     [SerializeField] bool debugGuards = false;
+    [SerializeField] HealthMgr healthbar;
+    [SerializeField] Hotbar hotbar;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,6 +33,8 @@ public class mgr : MonoBehaviour
         if(!debugGuards){    
             thiefRef = Instantiate(thiefPrefab, thiefSpawnPoint.position, Quaternion.identity);
             thiefRef.name = "Thief";
+            healthbar.ConnectPlayer(thiefRef.GetComponent<HealthyEntity>());
+            hotbar.ConnectPlayer(thiefRef.GetComponent<HealthyEntity>());
         }
         // cinemachine.Follow = thiefRef.transform;
 
