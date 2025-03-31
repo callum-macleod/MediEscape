@@ -13,13 +13,4 @@ public class StealthPotion : ItemInfo
         
     }
 
-    private IEnumerator EnableStealth(GameObject player)
-    {
-        player.layer = LayerMask.NameToLayer("Default");
-
-        yield return new WaitForSeconds(timerLimit);
-
-        player.layer = LayerMask.NameToLayer("Player");
-    }
-
 }

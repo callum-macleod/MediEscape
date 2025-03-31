@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,6 @@ public class Hotbar : MonoBehaviour
 
     public HealthyEntity playerHealth; // Drag player in Inspector
     private GameObject player;
-    private float timer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -61,13 +61,21 @@ public class Hotbar : MonoBehaviour
                 hp.Use(playerHealth); 
             }
             else if (items[selectedIndex] is StealthPotion sp){
-                timer += Time.deltaTime;
-                sp.Use(player);
+                StartCoroutine(EnableStealth(player, sp.timerLimit));
             }
 
             items[selectedIndex] = null;
             UpdateHotbarUI();
         }
+    }
+
+    private IEnumerator EnableStealth(GameObject player, float timerLimit)
+    {
+        player.layer = LayerMask.NameToLayer("Default");
+
+        yield return new WaitForSeconds(timerLimit);
+
+        player.layer = LayerMask.NameToLayer("Player");
     }
 
     public void GiveItem(int idx)
