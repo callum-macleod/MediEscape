@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -111,7 +110,7 @@ public class GuardAI : HealthyEntity
         // while in contact with such walls:
         if (collision.tag == "RequiresDrawOrder")
         {
-            int tilemapOrder = collision.GetComponent<TilemapRenderer>().sortingOrder;  // get draw order
+            int tilemapOrder = collision.GetComponent<Renderer>().sortingOrder;  // get draw order
 
             // is wall above or below player?
             if (collision.bounds.center.y > transform.position.y)
