@@ -5,7 +5,7 @@ public class HealthyEntity : MonoBehaviour
     [SerializeField] protected int maxHealth = 1;
     public int MaxHealth { get { return maxHealth; } }
 
-    protected int currentHealth { get; set; } = 69;
+    protected int currentHealth { get; set; } = int.MaxValue;
     public int CurrentHealth {  get { return currentHealth; } }
     protected bool dead = false;
 
@@ -36,8 +36,6 @@ public class HealthyEntity : MonoBehaviour
     {
         if (currentHealth == int.MaxValue)
             currentHealth = maxHealth;
-         if (currentHealth < 0)
-            print(currentHealth);
     }
 
     public void RecieveDamage(int damage)
