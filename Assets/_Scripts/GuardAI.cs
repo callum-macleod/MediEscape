@@ -7,10 +7,13 @@ using UnityEngine.Tilemaps;
 
 public class GuardAI : HealthyEntity
 {
+    #region DECLARATIONS
     [Header("Enemy Data")]
     public EnemyInfo enemyData;
     private ItemInfo itemHeld;
     private float enemyHealth;
+    private bool bribeable;
+    private bool friendly;
     
     [Header("Field of View (FOV)")]
     public float fovAngle = 60f;
@@ -40,6 +43,9 @@ public class GuardAI : HealthyEntity
     [Header("Alert")]
     [SerializeField] private float alertRadius = 10f;
 
+    [Header("Bribing")]
+    [SerializeField] private Hotbar hotbar;
+
     [Header("Debug")]
     [SerializeField] private bool drawGizmos = false;
 
@@ -62,8 +68,11 @@ public class GuardAI : HealthyEntity
 
     Vector3 lastPos = Vector3.zero;
     int facingDirection = 1;
+    #endregion
 
 
+
+    #region UNITY FUNCS
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -78,8 +87,8 @@ public class GuardAI : HealthyEntity
         enemyData = Instantiate(enemyData);
         fovRange = enemyData.FOVRange;
         proximityRadius = enemyData.poximityRadius;
-        if(enemyData.itemHeld != null)
-            itemHeld = enemyData.itemHeld;
+
+        hotbar = FindFirstObjectByType<Hotbar>();
 
         guardManager = FindFirstObjectByType<GuardManager>();
         guardManager.RegisterGuard(this);
@@ -94,37 +103,6 @@ public class GuardAI : HealthyEntity
             Debug.LogWarning($"{gameObject.name} was killed by debug key!");
             OnDeath();
         }
-    }
-
-    void FixedUpdate()
-    {
-        if(agent.velocity.sqrMagnitude > 0.01f)
-            lastKnownDirection = agent.velocity.normalized;
-        
-        if(target != null){
-            //animator.SetTrigger("TrWalk");
-            if(isPlayerInFOV() || isPlayerInProximity()){
-                targetEscaped = false;
-                wasInFOV = true;
-                agent.SetDestination(target.position);
-                ChangeState(GuardState.CHASE);
-
-                Alert();
-
-                if(Vector3.Distance(transform.position, target.position) <= attackingRange)
-                    Attack();
-            }else if(wasInFOV && targetEscaped){
-                SearchForTarget();
-            }else if(wasAlerted){
-                HandleAlertSearch();
-            }else{
-                Patrol();
-            }
-        }
-
-        //Debug.Log($"Guard {transform.name} is in {STATE} state");
-
-        SetFacingDirection();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -148,11 +126,65 @@ public class GuardAI : HealthyEntity
             }
         }
     }
+    #endregion
+
+
+
+    #region FSM
+    void FixedUpdate()
+    {
+        
+        if(enemyData.itemHeld != null)
+            itemHeld = enemyData.itemHeld;
+        bribeable = enemyData.bribeable;
+        friendly = enemyData.friendly;
+        
+        if(agent.velocity.sqrMagnitude > 0.01f)
+            lastKnownDirection = agent.velocity.normalized;
+        
+        if(target != null){
+            //animator.SetTrigger("TrWalk");
+            if((isPlayerInFOV() || isPlayerInProximity()) && !friendly){
+                if(!bribeable){
+                    targetEscaped = false;
+                    wasInFOV = true;
+                    agent.SetDestination(target.position);
+                    ChangeState(GuardState.CHASE);
+
+                    Alert();
+
+                    if(Vector3.Distance(transform.position, target.position) <= attackingRange)
+                        Attack();
+                }else{
+                    agent.SetDestination(target.position);
+                    ChangeState(GuardState.CHASE);
+                    TryBribe();
+                }
+            }else if(wasInFOV && targetEscaped && !friendly){
+                SearchForTarget();
+            }else if(wasAlerted && !friendly){
+                HandleAlertSearch();
+            }else{
+                Patrol();
+            }
+        }
+
+        //Debug.Log($"Guard {transform.name} is in {STATE} state");
+
+        SetFacingDirection();
+    }
+    #endregion
+
+
+
     void SetTarget(Transform newTarget)
     {
         target = newTarget;
     }
 
+
+
+    #region FIND PLAYER
     public bool isPlayerInFOV()
     {
         if(target == null) return false;
@@ -181,33 +213,37 @@ public class GuardAI : HealthyEntity
     }
 
     bool isPlayerInProximity()
-{
-    if (target == null) return false;
-
-    float distanceToTarget = Vector3.Distance(transform.position, target.position);
-    if (distanceToTarget < proximityRadius)
     {
-        // Vector3 eyePosition = transform.position + new Vector3(0f, 1.5f, 0f);
-        Vector3 directionToTarget = (target.position - transform.position).normalized;
+        if (target == null) return false;
 
-        int layerMask = LayerMask.GetMask("Player", "Walls"); 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToTarget, distanceToTarget, layerMask);
-
-        if (hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+        if (distanceToTarget < proximityRadius)
         {
-            // Debug.DrawRay(transform.position, directionToTarget * distanceToTarget, Color.blue, 1f);
-            return true;
+            // Vector3 eyePosition = transform.position + new Vector3(0f, 1.5f, 0f);
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+            int layerMask = LayerMask.GetMask("Player", "Walls"); 
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, directionToTarget, distanceToTarget, layerMask);
+
+            if (hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                // Debug.DrawRay(transform.position, directionToTarget * distanceToTarget, Color.blue, 1f);
+                return true;
+            }
         }
-    }
 
-    if (!targetEscaped && wasInFOV)
-    {
-        targetEscaped = true;
+        if (!targetEscaped && wasInFOV)
+        {
+            targetEscaped = true;
+        }
+        
+        return false;
     }
-    
-    return false;
-}
+    #endregion
 
+
+
+    #region PATROL
     void Patrol()
     {
         if(!isPausing && Vector3.Distance(transform.position, agent.destination) < 2f)
@@ -234,7 +270,11 @@ public class GuardAI : HealthyEntity
         isPausing = false;
         agent.SetDestination(GetRandomWaypoint());
     }
+    #endregion
 
+
+
+    #region SEARCH
     void SearchForTarget()
     {
         float searchTimeLimit = 10f;
@@ -250,7 +290,11 @@ public class GuardAI : HealthyEntity
             ChangeState(GuardState.SEARCH);
         }
     }
+    #endregion
 
+
+
+    #region ATTACK
     void Attack()
     {
         if(animator != null && !isAttacking){
@@ -266,7 +310,11 @@ public class GuardAI : HealthyEntity
     }
 
     void ResetAttack() => isAttacking = false;
+    #endregion
 
+
+
+    #region ALERT
     void Alert()
     {
         if(guardManager != null)
@@ -298,7 +346,61 @@ public class GuardAI : HealthyEntity
             }
         }
     }
+    #endregion
 
+
+
+    #region BRIBE
+    void TryBribe()
+    {
+        if(BribeCheck()){
+            targetEscaped = false;
+            wasInFOV = false;
+            wasAlerted = false;
+            ChangeState(GuardState.PATROL);
+            enemyData.friendly = true;
+            enemyData.bribeable = false;
+            Debug.Log($"{gameObject.name} has been bribed!");
+        }else{
+            enemyData.bribeable = !bribeable;
+            Debug.Log($"You are poor... RUN!");
+        }
+    }
+
+    bool BribeCheck()
+    {
+        int idx = 0;
+        Debug.Log($"Hotbar: {hotbar}, Hotbar Items: {hotbar.items}");
+        foreach(ItemInfo item in hotbar.items){
+            if(item == null){
+                idx++;
+                continue;
+            }
+            
+            if(item.itemType == ItemInfo.ItemType.Money){
+                hotbar.GiveItem(idx);
+                SwapItems(item);
+                return true;
+            }
+
+            idx++;
+        }
+        return false;
+    }
+
+    private void SwapItems(ItemInfo item)
+    {
+        if(itemHeld != null){
+            hotbar.AddItemToHotbar(itemHeld);
+            enemyData.itemHeld = item;
+        }else
+            enemyData.itemHeld = item;
+    }
+    #endregion
+
+
+
+    #region DEATH
     public void OnDeath()
     {
         if(isDead) return;
@@ -320,10 +422,14 @@ public class GuardAI : HealthyEntity
                 pickup.SetItemInfo(Instantiate(enemyData.itemHeld));
             Collider2D coll = droppedItem.GetComponent<Collider2D>();
             coll.isTrigger = true;
-            Debug.Log("Item dropped!");
+            // Debug.Log("Item dropped!");
         }
     }
+    #endregion
     
+
+
+    #region EXTRA FUNCS
     void OnDrawGizmos()
     {
         if (!drawGizmos) return;
@@ -406,4 +512,5 @@ public class GuardAI : HealthyEntity
         if (dead) return;
         animator.SetTrigger($"Tr{anim}");
     }
+    #endregion
 }

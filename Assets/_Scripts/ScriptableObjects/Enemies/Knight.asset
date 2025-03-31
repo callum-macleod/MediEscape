@@ -18,4 +18,4 @@ MonoBehaviour:
   damage: 2
   FOVRange: 5
   poximityRadius: 3
-  itemHeld: {fileID: 0}
+  itemHeld: {fileID: 11400000, guid: 3b48acfa2a6ef3b4a826f2b84fdd8c1a, type: 2}

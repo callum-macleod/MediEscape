@@ -2,7 +2,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "HealthPotion", menuName = "Inventory/HealthPotion")]
 
-public class HealthPotion : Item
+public class HealthPotion : ItemInfo
 {
     public int healAmount = 2;
     public void Use(HealthyEntity playerHealth)
@@ -12,11 +12,6 @@ public class HealthPotion : Item
             Debug.Log($"Healing for {healAmount} HP");
             playerHealth.Heal(healAmount);
         }
-    }
-
-    public override void Use()
-    {
-        Debug.LogWarning("Don't use this method. Use(PlayerHealth).");
     }
 
 }
