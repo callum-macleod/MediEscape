@@ -67,6 +67,20 @@ public class GuardAI : HealthyEntity
 
     Vector3 lastPos = Vector3.zero;
     int facingDirection = 1;
+
+
+
+    // trigger hitbox for drawOrder
+    BoxCollider2D _draworderHitbox;
+    BoxCollider2D draworderHitbox
+    {
+        get
+        {
+            if (_draworderHitbox == null)
+                _draworderHitbox = GetComponentInChildren<BoxCollider2D>();
+            return _draworderHitbox;
+        }
+    }
     #endregion
 
 
@@ -104,6 +118,7 @@ public class GuardAI : HealthyEntity
         }
     }
 
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         // some walls (front and back) require us to dynamically update the draw order of sprites
@@ -113,10 +128,21 @@ public class GuardAI : HealthyEntity
             int tilemapOrder = collision.GetComponent<Renderer>().sortingOrder;  // get draw order
 
             // is wall above or below player?
-            if (collision.bounds.center.y > transform.position.y)
-                tilemapOrder++;
+            if (collision.gameObject.layer == (int)Layers.Walls)
+            {
+                Vector3 collisionPoint = collision.ClosestPoint(draworderHitbox.bounds.center);
+                if (collisionPoint.y > draworderHitbox.bounds.center.y)
+                    tilemapOrder++;
+                else
+                    tilemapOrder--;
+            }
             else
-                tilemapOrder--;
+            {
+                if (collision.bounds.center.y > transform.position.y)
+                    tilemapOrder++;
+                else
+                    tilemapOrder--;
+            }
 
             // update player sprites draw order
             foreach (SpriteRenderer sprite in spriteRenderers)
@@ -129,8 +155,8 @@ public class GuardAI : HealthyEntity
 
 
 
-    #region FSM
-    void FixedUpdate()
+        #region FSM
+        void FixedUpdate()
     {
         
         if(enemyData.itemHeld != null)

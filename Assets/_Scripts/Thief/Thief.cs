@@ -132,17 +132,27 @@ public class Thief : HealthyEntity
             int tilemapOrder = collision.GetComponent<Renderer>().sortingOrder;  // get draw order
 
             // is wall above or below player?
-            Vector3 collisionPoint = collision.ClosestPoint(draworderHitbox.bounds.center);
-            if (collisionPoint.y > draworderHitbox.bounds.center.y)
-                tilemapOrder++;
-            else
-                tilemapOrder--;
-
-            // update player sprites draw order
-            foreach (SpriteRenderer sprite in spriteRenderers)
+            if (collision.gameObject.layer == (int)Layers.Walls)
             {
-                sprite.sortingOrder = tilemapOrder;
+                Vector3 collisionPoint = collision.ClosestPoint(draworderHitbox.bounds.center);
+                if (collisionPoint.y > draworderHitbox.bounds.center.y)
+                    tilemapOrder++;
+                else
+                    tilemapOrder--;
             }
+            else
+            {
+                if (collision.bounds.center.y > transform.position.y)
+                    tilemapOrder++;
+                else
+                    tilemapOrder--;
+            }
+
+                // update player sprites draw order
+                foreach (SpriteRenderer sprite in spriteRenderers)
+                {
+                    sprite.sortingOrder = tilemapOrder;
+                }
         }
     }
 

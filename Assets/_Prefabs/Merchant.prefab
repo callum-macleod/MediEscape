@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 5058899384183456651}
   - component: {fileID: 5557566060470191003}
   - component: {fileID: 7120978657310717270}
+  - component: {fileID: 9110569968121254028}
   m_Layer: 0
   m_Name: Merchant
   m_TagString: Untagged
@@ -401,6 +402,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.9120271}
   m_EdgeRadius: 0
+--- !u!114 &9110569968121254028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3025360227359915431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d146f609c012382499c6910f468b5720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  civilianInfo: {fileID: 11400000, guid: c2e3d1a9207209442937976487f7b3ff, type: 2}
 --- !u!1 &6593023867685417278
 GameObject:
   m_ObjectHideFlags: 0
