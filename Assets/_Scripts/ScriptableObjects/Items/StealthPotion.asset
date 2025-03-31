@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f91253fb64b695241829abcc3accd5a6, type: 3}
+  m_Name: StealthPotion
+  m_EditorClassIdentifier: 
+  itemName: StealthPotion
+  description: hides player fom guards for 5 seconds
+  itemIcon: {fileID: -8984791981334975670, guid: f7b37b91088c7d44b98c5e710477bd39, type: 3}
+  maxStack: 1
+  itemType: 0
+  value: 0
+  itemPrefab: {fileID: 3347543616739314971, guid: 0344284624032d942a3d42809f2c01be, type: 3}
+  isUsable: 1
+  timerLimit: 10

@@ -15,11 +15,13 @@ public class Hotbar : MonoBehaviour
     public float normalScale = 1f;
 
     public HealthyEntity playerHealth; // Drag player in Inspector
+    private GameObject player;
+    private float timer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<HealthyEntity>();
+        player = GameObject.FindGameObjectWithTag("Player");
         UpdateHotbarUI();
     }
 
@@ -54,9 +56,13 @@ public class Hotbar : MonoBehaviour
         if (items[selectedIndex] != null && items[selectedIndex].isUsable)
         {
             //checks if item is healthpotion
-            if (items[selectedIndex].itemType == ItemInfo.ItemType.Consumable)
+            if (items[selectedIndex] is HealthPotion hp)
             {
-                items[selectedIndex].Use(playerHealth); 
+                hp.Use(playerHealth); 
+            }
+            else if (items[selectedIndex] is StealthPotion sp){
+                timer += Time.deltaTime;
+                sp.Use(player);
             }
 
             items[selectedIndex] = null;
