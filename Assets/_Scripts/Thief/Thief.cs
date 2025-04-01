@@ -73,7 +73,6 @@ public class Thief : HealthyEntity
 
     float invisibilityVal = 0.7f;
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -166,6 +165,7 @@ public class Thief : HealthyEntity
         animator.SetTrigger("TrAttack");
         attackHitbox.enabled = true;
         Invoke(nameof(DisableAttackHitbox), 1);
+        AudioSource.PlayClipAtPoint(attack1, transform.position);
     }
 
     void DisableAttackHitbox()

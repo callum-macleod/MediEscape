@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using UnityEngine;
 
 public class HealthyEntity : MonoBehaviour
@@ -9,7 +10,9 @@ public class HealthyEntity : MonoBehaviour
     public int CurrentHealth {  get { return currentHealth; } }
     protected bool dead = false;
 
-
+    [Category("Audio")]
+    [SerializeField] protected AudioClip takeDmg;
+    [SerializeField] protected AudioClip attack1;
 
     // COMPONENTS
     Animator _animator;
@@ -42,6 +45,7 @@ public class HealthyEntity : MonoBehaviour
     {
         print($"Recieved {damage}");
         currentHealth -= damage;
+        AudioSource.PlayClipAtPoint(takeDmg, transform.position);
 
         if (!CheckIfReadyToDie())
             animator.SetTrigger("TrHurt");

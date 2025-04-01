@@ -452,6 +452,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
+  takeDmg: {fileID: 8300000, guid: 4ae4fe17d19c04e10920bfaca3bd8290, type: 3}
+  attack1: {fileID: 8300000, guid: 52fa067c25c5c401b811eb86d142287e, type: 3}
   spriteRenderers:
   - {fileID: 3439346278451372174}
   - {fileID: 116892850032529774}

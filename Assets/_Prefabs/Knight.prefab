@@ -467,6 +467,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2
+  takeDmg: {fileID: 8300000, guid: ebcbb664018f947728cb9b67468b0f48, type: 3}
+  attack1: {fileID: 8300000, guid: b76357a42d03a4722afcba74c3073136, type: 3}
   enemyData: {fileID: 11400000, guid: 4bd08384499d67a41bb38ed99e2f55fe, type: 2}
   fovAngle: 60
   patrolAreaCenter: {fileID: 511768035115880648, guid: c73eac49fee843f42819309b7fa5a5cc, type: 3}
@@ -475,6 +477,7 @@ MonoBehaviour:
   waypoints: []
   target: {fileID: 0}
   alertRadius: 10
+  hotbar: {fileID: 0}
   drawGizmos: 1
   STATE: 0
   spriteRenderers:
