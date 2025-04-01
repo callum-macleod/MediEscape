@@ -16,6 +16,7 @@ public class ActiveIcon : MonoBehaviour
     }
 
 
+
     private int lastIndex = -1;
 
     void Start()
@@ -63,4 +64,5 @@ public class ActiveIcon : MonoBehaviour
             iconRenderer.enabled = false;
         }
     }
+
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 816009352841611831}
   - component: {fileID: 8693998693911076669}
   - component: {fileID: 5181052617366824414}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: UnlockedDoor
   m_TagString: RequiresDrawOrder
   m_Icon: {fileID: 0}
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 2313506924922549561}
   - component: {fileID: 1359920900183409952}
   - component: {fileID: 8916975812104706034}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: LockedDoor
   m_TagString: RequiresDrawOrder
   m_Icon: {fileID: 0}
@@ -817,7 +817,7 @@ GameObject:
   m_Layer: 3
   m_Name: UnlockableDoor
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -908,5 +908,5 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2, y: 3}
+  m_Size: {x: 4, y: 6}
   m_EdgeRadius: 0

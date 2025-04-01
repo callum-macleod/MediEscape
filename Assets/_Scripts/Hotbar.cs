@@ -59,15 +59,18 @@ public class Hotbar : MonoBehaviour
             //checks if item is healthpotion
             if (items[selectedIndex] is HealthPotion hp)
             {
-                hp.Use(playerHealth); 
+                hp.Use(playerHealth);
             }
-            else if (items[selectedIndex] is StealthPotion sp){
+            else if (items[selectedIndex] is StealthPotion sp)
+            {
                 StartCoroutine(EnableStealth(player, sp.timerLimit));
-            }else if (items[selectedIndex]is SpeedPotion speed)
+            }
+            else if (items[selectedIndex] is SpeedPotion speed)
             {
                 StartCoroutine(EnableSpeed(player, speed.timerLimit));
-
             }
+            else if (items[selectedIndex] is Key k)
+                k.Use();
 
             items[selectedIndex] = null;
             UpdateHotbarUI();
