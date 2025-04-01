@@ -475,7 +475,8 @@ MonoBehaviour:
   waypoints: []
   target: {fileID: 0}
   alertRadius: 10
-  drawGizmos: 1
+  hotbar: {fileID: 0}
+  drawGizmos: 0
   STATE: 0
   spriteRenderers:
   - {fileID: 5670126423813973290}
