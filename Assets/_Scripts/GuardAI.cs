@@ -381,18 +381,20 @@ public class GuardAI : HealthyEntity
 
     int BribeCheck()
     {
-        if(hotbar.items[hotbar.selectedIndex].itemType == ItemInfo.ItemType.Money){
-            return hotbar.selectedIndex;
-        }else if(hotbar.items.Count == 0){
+        if (hotbar.items.Count == 0)
             return -1;
-        }
+
         for(int i=0 ; i < hotbar.items.Count ; i++){
+            if (hotbar.items[i] == null)
+                continue;
+
             if(hotbar.items[i].itemType == ItemInfo.ItemType.Money && i == hotbar.selectedIndex)
                 return i;
-            else if(hotbar.items[i].itemType == ItemInfo.ItemType.Money && i != hotbar.selectedIndex){
+            if(hotbar.items[i].itemType == ItemInfo.ItemType.Money && i != hotbar.selectedIndex)
                 return 5;
-            }
+
         }
+
         return -1;
     }
 
