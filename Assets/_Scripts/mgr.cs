@@ -18,7 +18,7 @@ public class mgr : MonoBehaviour
     List<GameObject> guardRefs = new List<GameObject>();
     [SerializeField] EnemyInfo soldierInfo;
     [SerializeField] EnemyInfo knightInfo;
-    [SerializeField] private List<ItemInfo> items = new List<ItemInfo>();
+    [SerializeField] private List<ItemInfo> items = new List<ItemInfo>(1);
 
     [Header("Camera")]
     [SerializeField] CinemachineCamera cinemachineCamera;
