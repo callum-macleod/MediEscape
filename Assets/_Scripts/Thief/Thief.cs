@@ -71,6 +71,8 @@ public class Thief : HealthyEntity
     bool attackBuffered = false;
     bool attacking { get { return currentAttackCooldown > 0; } }
 
+    float invisibilityVal = 0.7f;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -84,7 +86,7 @@ public class Thief : HealthyEntity
         base.Update();
 
         if (Input.GetKeyDown(KeyCode.Space))
-            animator.SetTrigger("TrHurt");
+            TogglePlayerTransparency();
         if (Input.GetKey(KeyCode.Mouse0) || attackBuffered)
             Attack();
 
@@ -169,5 +171,16 @@ public class Thief : HealthyEntity
     void DisableAttackHitbox()
     {
         attackHitbox.enabled = false;
+    }
+
+    void TogglePlayerTransparency()
+    {
+        foreach(SpriteRenderer sprite in spriteRenderers)
+        {
+            if (sprite.color.a == 1)
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, invisibilityVal);
+            else
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1f);
+        }
     }
 }
