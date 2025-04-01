@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 3347543616739314965}
   - component: {fileID: 7726794906276472555}
   - component: {fileID: -3772438284151882193}
+  - component: {fileID: 384958297984573046}
   m_Layer: 0
   m_Name: Loot_Sack
   m_TagString: Untagged
@@ -240,3 +241,17 @@ MonoBehaviour:
   loot_sack_knocked_over: {fileID: -7320739921232939290, guid: f7b37b91088c7d44b98c5e710477bd39, type: 3}
   loot_sack_upright_shadow: {fileID: -109379005264513712, guid: bedf2249d571fad4bb00e65a7679e446, type: 3}
   loot_sack_knocked_over_shadow: {fileID: -5018907269183208951, guid: bedf2249d571fad4bb00e65a7679e446, type: 3}
+--- !u!114 &384958297984573046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3347543616739314971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28164653c53c5c41857662e5d21d87a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 3b48acfa2a6ef3b4a826f2b84fdd8c1a, type: 2}
+  canBePickedUp: 1
