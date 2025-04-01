@@ -80,10 +80,12 @@ public class Hotbar : MonoBehaviour
     private IEnumerator EnableStealth(GameObject player, float timerLimit)
     {
         player.layer = LayerMask.NameToLayer("Default");
+        player.GetComponent<Thief>().TogglePlayerTransparency();
 
         yield return new WaitForSeconds(timerLimit);
 
         player.layer = LayerMask.NameToLayer("Player");
+        player.GetComponent<Thief>().TogglePlayerTransparency();
     }
 
     private IEnumerator EnableSpeed(GameObject player, float timerLimit)

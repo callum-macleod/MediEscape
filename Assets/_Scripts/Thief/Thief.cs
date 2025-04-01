@@ -173,7 +173,7 @@ public class Thief : HealthyEntity
         attackHitbox.enabled = false;
     }
 
-    void TogglePlayerTransparency()
+    public void TogglePlayerTransparency()
     {
         foreach(SpriteRenderer sprite in spriteRenderers)
         {
