@@ -1150,6 +1150,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 6781424697917101064}
+    - target: {fileID: 4801111875263529994, guid: 1b567d6a6402e064aba1046ddcba6529, type: 3}
+      propertyPath: timerIcon
+      value: 
+      objectReference: {fileID: 4451616173450814697, guid: 31d5a89c9c54dab48921ba12cf57d16d, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
