@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.AI;
@@ -103,6 +104,45 @@ public class GuardAI : HealthyEntity
             Debug.LogWarning($"{gameObject.name} was killed by debug key!");
             OnDeath();
         }
+
+        if(enemyData.itemHeld != null)
+            itemHeld = enemyData.itemHeld;
+        bribeable = enemyData.bribeable;
+        friendly = enemyData.friendly;
+        
+        if(agent.velocity.sqrMagnitude > 0.01f)
+            lastKnownDirection = agent.velocity.normalized;
+        
+        if(target != null){
+            //animator.SetTrigger("TrWalk");
+            if((isPlayerInFOV() || isPlayerInProximity()) && !friendly){
+                if(!bribeable){
+                    targetEscaped = false;
+                    wasInFOV = true;
+                    agent.SetDestination(target.position);
+                    ChangeState(GuardState.CHASE);
+
+                    Alert();
+
+                    if(Vector3.Distance(transform.position, target.position) <= attackingRange)
+                        Attack();
+                }else{
+                    agent.SetDestination(target.position);
+                    ChangeState(GuardState.CHASE);
+                    StartCoroutine(TryBribe());
+                }
+            }else if(wasInFOV && targetEscaped && !friendly){
+                SearchForTarget();
+            }else if(wasAlerted && !friendly){
+                HandleAlertSearch();
+            }else{
+                Patrol();
+            }
+        }
+
+        //Debug.Log($"Guard {transform.name} is in {STATE} state");
+
+        SetFacingDirection();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -134,44 +174,7 @@ public class GuardAI : HealthyEntity
     void FixedUpdate()
     {
         
-        if(enemyData.itemHeld != null)
-            itemHeld = enemyData.itemHeld;
-        bribeable = enemyData.bribeable;
-        friendly = enemyData.friendly;
         
-        if(agent.velocity.sqrMagnitude > 0.01f)
-            lastKnownDirection = agent.velocity.normalized;
-        
-        if(target != null){
-            //animator.SetTrigger("TrWalk");
-            if((isPlayerInFOV() || isPlayerInProximity()) && !friendly){
-                if(!bribeable){
-                    targetEscaped = false;
-                    wasInFOV = true;
-                    agent.SetDestination(target.position);
-                    ChangeState(GuardState.CHASE);
-
-                    Alert();
-
-                    if(Vector3.Distance(transform.position, target.position) <= attackingRange)
-                        Attack();
-                }else{
-                    agent.SetDestination(target.position);
-                    ChangeState(GuardState.CHASE);
-                    TryBribe();
-                }
-            }else if(wasInFOV && targetEscaped && !friendly){
-                SearchForTarget();
-            }else if(wasAlerted && !friendly){
-                HandleAlertSearch();
-            }else{
-                Patrol();
-            }
-        }
-
-        //Debug.Log($"Guard {transform.name} is in {STATE} state");
-
-        SetFacingDirection();
     }
     #endregion
 
@@ -351,9 +354,16 @@ public class GuardAI : HealthyEntity
 
 
     #region BRIBE
-    void TryBribe()
+    private IEnumerator TryBribe()
     {
-        if(BribeCheck()){
+        int idx = BribeCheck();
+        Debug.Log($"BribeCheck - {idx}");
+        if(idx >= 0){
+            while (!Input.GetKeyDown(KeyCode.F) || idx > 4){
+                yield return null;
+            }
+            hotbar.GiveItem(idx);
+            SwapItems(hotbar.items[idx]);
             targetEscaped = false;
             wasInFOV = false;
             wasAlerted = false;
@@ -362,30 +372,30 @@ public class GuardAI : HealthyEntity
             enemyData.bribeable = false;
             Debug.Log($"{gameObject.name} has been bribed!");
         }else{
+            // Standing Animation
+            yield return new WaitForSeconds(2);
             enemyData.bribeable = !bribeable;
             Debug.Log($"You are poor... RUN!");
         }
     }
 
-    bool BribeCheck()
+    int BribeCheck()
     {
-        int idx = 0;
-        Debug.Log($"Hotbar: {hotbar}, Hotbar Items: {hotbar.items}");
-        foreach(ItemInfo item in hotbar.items){
-            if(item == null){
-                idx++;
-                continue;
-            }
-            
-            if(item.itemType == ItemInfo.ItemType.Money){
-                hotbar.GiveItem(idx);
-                SwapItems(item);
-                return true;
-            }
+        if (hotbar.items.Count == 0)
+            return -1;
 
-            idx++;
+        for(int i=0 ; i < hotbar.items.Count ; i++){
+            if (hotbar.items[i] == null)
+                continue;
+
+            if(hotbar.items[i].itemType == ItemInfo.ItemType.Money && i == hotbar.selectedIndex)
+                return i;
+            if(hotbar.items[i].itemType == ItemInfo.ItemType.Money && i != hotbar.selectedIndex)
+                return 5;
+
         }
-        return false;
+
+        return -1;
     }
 
     private void SwapItems(ItemInfo item)
