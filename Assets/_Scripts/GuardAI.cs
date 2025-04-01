@@ -88,6 +88,10 @@ public class GuardAI : HealthyEntity
         enemyData = Instantiate(enemyData);
         fovRange = enemyData.FOVRange;
         proximityRadius = enemyData.poximityRadius;
+        if(enemyData.itemHeld != null)
+            itemHeld = enemyData.itemHeld;
+        bribeable = enemyData.bribeable;
+        friendly = enemyData.friendly;
 
         hotbar = FindFirstObjectByType<Hotbar>();
 
@@ -105,18 +109,13 @@ public class GuardAI : HealthyEntity
             OnDeath();
         }
 
-        if(enemyData.itemHeld != null)
-            itemHeld = enemyData.itemHeld;
-        bribeable = enemyData.bribeable;
-        friendly = enemyData.friendly;
-        
         if(agent.velocity.sqrMagnitude > 0.01f)
             lastKnownDirection = agent.velocity.normalized;
         
         if(target != null){
             //animator.SetTrigger("TrWalk");
-            if((isPlayerInFOV() || isPlayerInProximity()) && !friendly){
-                if(!bribeable){
+            if((isPlayerInFOV() || isPlayerInProximity()) && !enemyData.friendly){
+                if(!enemyData.bribeable){
                     targetEscaped = false;
                     wasInFOV = true;
                     agent.SetDestination(target.position);
@@ -173,7 +172,6 @@ public class GuardAI : HealthyEntity
     #region FSM
     void FixedUpdate()
     {
-        
         
     }
     #endregion
@@ -358,19 +356,23 @@ public class GuardAI : HealthyEntity
     {
         int idx = BribeCheck();
         Debug.Log($"BribeCheck - {idx}");
-        if(idx >= 0){
+        if(idx >= 0 && idx < 4){
             while (!Input.GetKeyDown(KeyCode.F) || idx > 4){
-                yield return null;
+                yield return new WaitForSeconds(3);
+                enemyData.bribeable = !bribeable;
+                Debug.Log($"You are poor... RUN!");
             }
-            hotbar.GiveItem(idx);
-            SwapItems(hotbar.items[idx]);
-            targetEscaped = false;
-            wasInFOV = false;
-            wasAlerted = false;
-            ChangeState(GuardState.PATROL);
-            enemyData.friendly = true;
-            enemyData.bribeable = false;
-            Debug.Log($"{gameObject.name} has been bribed!");
+            if(enemyData.bribeable){
+                hotbar.GiveItem(idx);
+                SwapItems(hotbar.items[idx]);
+                targetEscaped = false;
+                wasInFOV = false;
+                wasAlerted = false;
+                ChangeState(GuardState.PATROL);
+                enemyData.friendly = true;
+                enemyData.bribeable = false;
+                Debug.Log($"{gameObject.name} has been bribed!");
+            }
         }else{
             // Standing Animation
             yield return new WaitForSeconds(2);
