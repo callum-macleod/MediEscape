@@ -85,7 +85,6 @@ public class GuardAI : HealthyEntity
 
         attackingRange = agent.stoppingDistance;
 
-        enemyData = Instantiate(enemyData);
         fovRange = enemyData.FOVRange;
         proximityRadius = enemyData.poximityRadius;
         if(enemyData.itemHeld != null)
