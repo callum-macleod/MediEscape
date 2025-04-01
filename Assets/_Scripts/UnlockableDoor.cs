@@ -1,9 +1,13 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class UnlockableDoor : MonoBehaviour
 {
-    [SerializeField] GameObject LockedSpriteMap;
-    [SerializeField] GameObject UnlockedSpriteMap;
+    [SerializeField] GameObject[] LockedSpriteMaps;
+    [SerializeField] GameObject[] UnlockedSpriteMaps;
 
     BoxCollider2D _collider;
     BoxCollider2D collider
@@ -16,22 +20,37 @@ public class UnlockableDoor : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    Hotbar _hotbar;
+    Hotbar hotbar
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        get
+        {
+            if (_hotbar == null)
+                _hotbar = GameObject.Find("Hotbar").GetComponent<Hotbar>();
+            return _hotbar;
+        }
     }
 
     public void Unlock()
     {
-        LockedSpriteMap.SetActive(false);
-        UnlockedSpriteMap.SetActive(true);
+        foreach (GameObject map in LockedSpriteMaps)
+            map.SetActive(false);
+
+        foreach (GameObject map in UnlockedSpriteMaps)
+            map.SetActive(true);
+
         collider.enabled = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == (int)Layers.Player)
+        {
+            Key key = (Key) hotbar.items.FirstOrDefault(a => a.GetType() == typeof(Key));
+            if (key != null)
+            {
+                Unlock();
+            }
+        }
     }
 }
