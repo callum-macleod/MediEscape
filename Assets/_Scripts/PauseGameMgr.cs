@@ -61,7 +61,10 @@ public class PauseGameMgr : MonoBehaviour
         TogglePause();
     }
 
-  
+  public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 
     public void Restart()
     {
