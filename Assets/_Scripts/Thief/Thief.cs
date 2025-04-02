@@ -159,6 +159,7 @@ public class Thief : HealthyEntity
             return;
         }
 
+        AudioMgr.Instance.PlayAttackSound(transform);
         attackBuffered = false;
         currentAttackCooldown = attackCooldown;
         currentAttackCooldown += Time.deltaTime;  // ensures that `attacking` returns true immediately

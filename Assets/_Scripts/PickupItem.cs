@@ -39,25 +39,26 @@ public class PickupItem : MonoBehaviour
     }
 
     private void Pickup(Hotbar hotbar)
-{
-    if (!canBePickedUp || itemData == null) return;
-
-    canBePickedUp = false;
-    isCollected = true;
-
-    Debug.Log($"Hotbar Reference: {hotbar}");  // Check if the hotbar is detected
-
-    if (hotbar != null)
     {
-        Debug.Log($"Attempting to add {itemData.name} to Hotbar");
-        hotbar.AddItemToHotbar(itemData);  // Add the item
-        Destroy(gameObject);
+        if (!canBePickedUp || itemData == null) return;
+
+        canBePickedUp = false;
+        isCollected = true;
+
+        Debug.Log($"Hotbar Reference: {hotbar}");  // Check if the hotbar is detected
+
+        AudioMgr.Instance.PLayPickupItemSound(transform);
+        if (hotbar != null)
+        {
+            Debug.Log($"Attempting to add {itemData.name} to Hotbar");
+            hotbar.AddItemToHotbar(itemData);  // Add the item
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.LogError("Hotbar not found!");
+        }
     }
-    else
-    {
-        Debug.LogError("Hotbar not found!");
-    }
-}
 
     // Set the item's data when instantiated
     public void SetItemInfo(ItemInfo newItemData)

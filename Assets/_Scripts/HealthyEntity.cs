@@ -43,6 +43,7 @@ public class HealthyEntity : MonoBehaviour
 
     public void RecieveDamage(int damage)
     {
+        AudioMgr.Instance.PlayHitSound(transform);
         print($"Recieved {damage}");
         currentHealth -= damage;
         AudioSource.PlayClipAtPoint(takeDmg, transform.position);

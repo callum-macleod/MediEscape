@@ -300,8 +300,9 @@ public class GuardAI : HealthyEntity
         if(animator != null && !isAttacking){
             isAttacking = true;
             ChangeAnimation(AnimationTriggers.Attack);
+            AudioMgr.Instance.PlayAttackSound(transform);
 
-            if(target != null){
+            if (target != null){
                 target.GetComponent<HealthyEntity>().RecieveDamage(damage);
             }
             Invoke(nameof(ResetAttack), 1f);
