@@ -210,11 +210,11 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 1679e40e0aa2dcb4ebf829fadc601666, type: 2}
   fovAngle: 180
   patrolAreaCenter: {fileID: 511768035115880648}
-  patrolAreaRadius: 7
-  minPatrolDistance: 4
+  patrolAreaRadius: 4
+  minPatrolDistance: 2
   waypoints: []
   target: {fileID: 0}
-  alertRadius: 20
+  alertRadius: 10
   hotbar: {fileID: 0}
   drawGizmos: 0
   STATE: 0

@@ -16,6 +16,8 @@ MonoBehaviour:
   prefab: {fileID: 4054535486810487076, guid: f3722b7cd54792c47954479e791a7f19, type: 3}
   health: 10
   damage: 2
-  FOVRange: 5
+  FOVRange: 8
   poximityRadius: 3
+  bribeable: 0
+  friendly: 0
   itemHeld: {fileID: 11400000, guid: 3b48acfa2a6ef3b4a826f2b84fdd8c1a, type: 2}
