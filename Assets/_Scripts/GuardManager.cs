@@ -3,7 +3,13 @@ using UnityEngine;
 
 public class GuardManager : MonoBehaviour
 {
+    public static GuardManager Instance;
     private List<GuardAI> guards = new List<GuardAI>();
+
+    private void Start()
+    {
+        Instance = this;
+    }
 
     public void RegisterGuard(GuardAI guard)
     {
@@ -25,5 +31,10 @@ public class GuardManager : MonoBehaviour
                 guard.ChangeState(GuardState.ALERTED);
             }
         }
+    }
+
+    public void RemoveGuard(GuardAI guard)
+    {
+        guards.Remove(guard);
     }
 }

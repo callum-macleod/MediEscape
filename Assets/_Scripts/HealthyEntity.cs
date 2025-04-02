@@ -64,7 +64,7 @@ public class HealthyEntity : MonoBehaviour
 
         return false;
     }
-    protected void Die()
+    protected virtual void Die()
     {
         print($"{name}: Dying");
         animator.SetTrigger("TrDie");
