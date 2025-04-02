@@ -425,6 +425,7 @@ public class GuardAI : HealthyEntity
 
     protected override void Die()
     {
+        DropItem();
         GuardManager.Instance.RemoveGuard(this);
         agent.isStopped = true;
         base.Die();
