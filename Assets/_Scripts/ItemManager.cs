@@ -11,11 +11,14 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private List<ItemInfo> items = new List<ItemInfo>();
     List<GameObject> itemRefs = new List<GameObject>();
     
-    [Header("Quest Items")]
-    [SerializeField] private Transform initKeySpawn;
-    [SerializeField] private List<Transform> keySpawnPoints = new List<Transform>();
+    [Header("Quest Items - Town")]
+    [SerializeField] private List<Transform> townKeySpawn = new List<Transform>();
     [SerializeField] public ItemInfo keyItem;
     List<GameObject> keyRefs = new List<GameObject>();
+
+    [Header("Quest Items - Prison")]
+    [SerializeField] private Transform initKeySpawn;
+    [SerializeField] private List<Transform> prisonKeySpawn = new List<Transform>();
 
 
     
@@ -32,12 +35,14 @@ public class ItemManager : MonoBehaviour
             SpawnItem(sp, shuffledItems[idx]);
         }
 
-        List<Transform> shuffledKeySpawnPoints = keySpawnPoints.OrderBy(x => Random.value).ToList();
+        List<Transform> shuffledTownKeySpawnPoints = townKeySpawn.OrderBy(x => Random.value).ToList();
+        List<Transform> shuffledPrisKeySpawnPoints = prisonKeySpawn.OrderBy(x => Random.value).ToList();
 
         SpawnKey(initKeySpawn, keyItem);
+        SpawnKey(shuffledPrisKeySpawnPoints[0], keyItem);
 
         for(int i=0 ; i < 2 ; i++){
-            SpawnKey(shuffledKeySpawnPoints[i], keyItem);
+            SpawnKey(shuffledTownKeySpawnPoints[i], keyItem);
         }
     }
 
