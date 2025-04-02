@@ -117,7 +117,7 @@ public class Hotbar : MonoBehaviour
     {
         for (int i = 0; i < slotImages.Length; i++)
         {
-            if (items.Count < i && items[i] != null)
+            if (items[i] != null)
             {
                 slotIcons[i].sprite = items[i].itemIcon;
                 slotIcons[i].enabled = true;
