@@ -306,7 +306,6 @@ public class GuardAI : HealthyEntity
                 target.GetComponent<HealthyEntity>().RecieveDamage(damage);
             }
             Invoke(nameof(ResetAttack), 1f);
-            AudioSource.PlayClipAtPoint(attack1, transform.position);
         }
     }
 

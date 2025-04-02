@@ -166,7 +166,6 @@ public class Thief : HealthyEntity
         animator.SetTrigger("TrAttack");
         attackHitbox.enabled = true;
         Invoke(nameof(DisableAttackHitbox), 1);
-        AudioSource.PlayClipAtPoint(attack1, transform.position);
     }
 
     void DisableAttackHitbox()
