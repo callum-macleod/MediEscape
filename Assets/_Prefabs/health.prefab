@@ -235,5 +235,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28164653c53c5c41857662e5d21d87a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 87a506222b60113469a144dba5ada63e, type: 2}
+  itemData: {fileID: 11400000, guid: 8f19503dbbe3b3841a63c31f6684e600, type: 2}
   canBePickedUp: 1

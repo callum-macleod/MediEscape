@@ -50,7 +50,7 @@ public class ItemManager : MonoBehaviour
     {
         GameObject itemObj = Instantiate(item.itemPrefab, spawnPoint.position, Quaternion.identity);
         ItemInfo itemClone = Instantiate(item);
-        PickupItem pickup = itemObj.AddComponent<PickupItem>();
+        PickupItem pickup = itemObj.GetComponent<PickupItem>();
         if(pickup != null)
             pickup.SetItemInfo(item);
         Collider2D coll = itemObj.GetComponent<Collider2D>();
@@ -64,7 +64,7 @@ public class ItemManager : MonoBehaviour
     {
         GameObject keyObj = Instantiate(key.itemPrefab, spawnPoint.position, Quaternion.identity);
         ItemInfo keyClone = Instantiate(key);
-        PickupItem pickup = keyObj.AddComponent<PickupItem>();
+        PickupItem pickup = keyObj.GetComponent<PickupItem>();
         if(pickup != null)
             pickup.SetItemInfo(key);
         Collider2D coll = keyObj.GetComponent<Collider2D>();
