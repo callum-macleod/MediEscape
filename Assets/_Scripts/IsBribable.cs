@@ -66,7 +66,7 @@ public class GuardStateIcon : MonoBehaviour
             iconRenderer.sprite = bribeableIcon;
             iconRenderer.color = bribeableColor;
         }
-        else
+        else if( !guard.enemyData.friendly && !guard.enemyData.bribeable)
         {
             switch (guard.STATE)
             {
