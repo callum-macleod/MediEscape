@@ -52,7 +52,7 @@ public class ItemManager : MonoBehaviour
         ItemInfo itemClone = Instantiate(item);
         PickupItem pickup = itemObj.AddComponent<PickupItem>();
         if(pickup != null)
-            pickup.SetItemInfo(itemClone);
+            pickup.SetItemInfo(item);
         Collider2D coll = itemObj.GetComponent<Collider2D>();
         coll.isTrigger = true;
 
@@ -66,7 +66,7 @@ public class ItemManager : MonoBehaviour
         ItemInfo keyClone = Instantiate(key);
         PickupItem pickup = keyObj.AddComponent<PickupItem>();
         if(pickup != null)
-            pickup.SetItemInfo(keyClone);
+            pickup.SetItemInfo(key);
         Collider2D coll = keyObj.GetComponent<Collider2D>();
         coll.isTrigger = true;
 
