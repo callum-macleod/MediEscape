@@ -207,8 +207,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2
-  takeDmg: {fileID: 8300000, guid: f3645d7388d9f4efc88a56c59b3a70d4, type: 3}
-  attack1: {fileID: 8300000, guid: b76357a42d03a4722afcba74c3073136, type: 3}
   enemyData: {fileID: 11400000, guid: 1679e40e0aa2dcb4ebf829fadc601666, type: 2}
   fovAngle: 180
   patrolAreaCenter: {fileID: 511768035115880648}
@@ -216,7 +214,7 @@ MonoBehaviour:
   minPatrolDistance: 2
   waypoints: []
   target: {fileID: 0}
-  alertRadius: 10
+  alertRadius: 5
   hotbar: {fileID: 0}
   drawGizmos: 0
   STATE: 0
@@ -835,15 +833,15 @@ MonoBehaviour:
   guard: {fileID: 3762976951483308274}
   offset: {x: 0, y: 2.5, z: 0}
   iconRenderer: {fileID: 2076519726138540029}
-  patrolIcon: {fileID: 0}
+  patrolIcon: {fileID: 7482667652216324306, guid: a844606543b9ff245a134bedbebb72ee, type: 3}
   chaseIcon: {fileID: 7482667652216324306, guid: a844606543b9ff245a134bedbebb72ee, type: 3}
   searchIcon: {fileID: -2413806693520163455, guid: a7918be98bcf38b4cb0254cb231cf1af, type: 3}
-  bribeableIcon: {fileID: 7482667652216324306, guid: a844606543b9ff245a134bedbebb72ee, type: 3}
+  bribeableIcon: {fileID: -2413806693520163455, guid: a7918be98bcf38b4cb0254cb231cf1af, type: 3}
   bribedIcon: {fileID: -2413806693520163455, guid: a7918be98bcf38b4cb0254cb231cf1af, type: 3}
   patrolColor: {r: 1, g: 1, b: 1, a: 1}
   chaseColor: {r: 1, g: 0, b: 0, a: 1}
-  searchColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  bribeableColor: {r: 0, g: 1, b: 1, a: 1}
+  searchColor: {r: 0.015686274, g: 0.13128218, b: 1, a: 1}
+  bribeableColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   bribedColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!212 &2076519726138540029
 SpriteRenderer:

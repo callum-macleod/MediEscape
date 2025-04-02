@@ -474,7 +474,7 @@ MonoBehaviour:
   minPatrolDistance: 2
   waypoints: []
   target: {fileID: 0}
-  alertRadius: 20
+  alertRadius: 5
   hotbar: {fileID: 0}
   drawGizmos: 1
   STATE: 0

@@ -84,6 +84,7 @@ public class GuardAI : HealthyEntity
     }
     #endregion
 
+    bool bribeInputted = false;
 
 
     #region UNITY FUNCS
@@ -120,6 +121,9 @@ public class GuardAI : HealthyEntity
             Debug.LogWarning($"{gameObject.name} was killed by debug key!");
             Die();
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+            bribeInputted = true;
     }
 
 
@@ -154,6 +158,26 @@ public class GuardAI : HealthyEntity
                 sprite.sortingOrder = tilemapOrder;
             }
         }
+
+        else if (enemyData.bribeable && collision.tag == "Player")
+        {
+            ItemInfo mb = (ItemInfo)hotbar.items.FirstOrDefault(a => a != null && a.itemPrefab.name == "Loot_Sack");
+            if (mb != null)
+            {
+                int idx = hotbar.items.IndexOf(mb);
+                hotbar.items[idx] = null;
+                hotbar.UpdateHotbarUI();
+                hotbar.GiveItem(idx);
+                SwapItems(hotbar.items[idx]);
+                targetEscaped = false;
+                wasInFOV = false;
+                wasAlerted = false;
+                ChangeState(GuardState.PATROL);
+                enemyData.friendly = true;
+                enemyData.bribeable = false;
+                Debug.Log($"{gameObject.name} has been bribed!");
+            }
+        }
     }
     #endregion
 
@@ -162,7 +186,7 @@ public class GuardAI : HealthyEntity
         #region FSM
         void FixedUpdate()
     {
-        
+
         if(enemyData.itemHeld != null)
             itemHeld = enemyData.itemHeld;
         bribeable = enemyData.bribeable;
@@ -187,7 +211,8 @@ public class GuardAI : HealthyEntity
                 }else{
                     agent.SetDestination(target.position);
                     ChangeState(GuardState.CHASE);
-                    StartCoroutine(TryBribe());
+                    //if (bribeInputted)
+                        //StartCoroutine(TryBribe());
                 }
             }else if(wasInFOV && targetEscaped && !friendly){
                 SearchForTarget();
@@ -411,53 +436,55 @@ public class GuardAI : HealthyEntity
 
 
     #region BRIBE
-    private IEnumerator TryBribe()
-    {
-        int idx = BribeCheck();
-        Debug.Log($"BribeCheck - {idx}");
-        if(idx >= 0 && idx < 4){
-            while (!Input.GetKeyDown(KeyCode.F) || idx > 4){
-                yield return new WaitForSeconds(3);
-                enemyData.bribeable = !bribeable;
-                Debug.Log($"You are poor... RUN!");
-            }
-            if(enemyData.bribeable){
-                hotbar.GiveItem(idx);
-                SwapItems(hotbar.items[idx]);
-                targetEscaped = false;
-                wasInFOV = false;
-                wasAlerted = false;
-                ChangeState(GuardState.PATROL);
-                enemyData.friendly = true;
-                enemyData.bribeable = false;
-                Debug.Log($"{gameObject.name} has been bribed!");
-            }
-        }else{
-            // Standing Animation
-            yield return new WaitForSeconds(2);
-            enemyData.bribeable = !bribeable;
-            Debug.Log($"You are poor... RUN!");
-        }
-    }
+    //private IEnumerator TryBribe()
+    //{
+    //    int idx = BribeCheck();  // find hotbar slot of player's money
+    //    Debug.Log($"BribeCheck - {idx}");
 
-    int BribeCheck()
-    {
-        if (hotbar.items.Count == 0)
-            return -1;
+    //    // if valid hotbar slot
+    //    if(idx >= 0 && idx < 4){
+    //        //while (!Input.GetKeyDown(KeyCode.F) || idx > 4){
+    //        //    yield return new WaitForSeconds(3);
+    //        //    /*enemyData.bribeable = false*/;
+    //        //    Debug.Log($"You are poor... RUN!");
+    //        //}
+    //        if(enemyData.bribeable){
+    //            hotbar.GiveItem(idx);
+    //            SwapItems(hotbar.items[idx]);
+    //            targetEscaped = false;
+    //            wasInFOV = false;
+    //            wasAlerted = false;
+    //            ChangeState(GuardState.PATROL);
+    //            enemyData.friendly = true;
+    //            enemyData.bribeable = false;
+    //            Debug.Log($"{gameObject.name} has been bribed!");
+    //        }
+    //    }else{
+    //        // Standing Animation
+    //        yield return new WaitForSeconds(2);
+    //        enemyData.bribeable = !bribeable;
+    //        Debug.Log($"You are poor... RUN!");
+    //    }
+    //}
 
-        for(int i=0 ; i < hotbar.items.Count ; i++){
-            if (hotbar.items[i] == null)
-                continue;
+    //int BribeCheck()
+    //{
+    //    if (hotbar.items.Count == 0)
+    //        return -1;
 
-            if(hotbar.items[i].itemType == ItemInfo.ItemType.Money && i == hotbar.selectedIndex)
-                return i;
-            if(hotbar.items[i].itemType == ItemInfo.ItemType.Money && i != hotbar.selectedIndex)
-                return 5;
+    //    for(int i=0 ; i < hotbar.items.Count ; i++){
+    //        if (hotbar.items[i] == null)
+    //            continue;
 
-        }
+    //        if(hotbar.items[i].itemType == ItemInfo.ItemType.Money && i == hotbar.selectedIndex)
+    //            return i;
+    //        if(hotbar.items[i].itemType == ItemInfo.ItemType.Money && i != hotbar.selectedIndex)
+    //            return 5;
 
-        return -1;
-    }
+    //    }
+
+    //    return -1;
+    //}
 
     private void SwapItems(ItemInfo item)
     {
