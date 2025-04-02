@@ -229,3 +229,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95de3980d61e5074eab2322e0bc916ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hidingSprite: {fileID: 2545779934182465545, guid: b77f3e6bc890e444ca65a009411de1f8, type: 3}
+  hidingIcon: {fileID: 0}

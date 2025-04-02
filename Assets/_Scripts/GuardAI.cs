@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
@@ -69,6 +68,20 @@ public class GuardAI : HealthyEntity
 
     Vector3 lastPos = Vector3.zero;
     int facingDirection = 1;
+
+
+
+    // trigger hitbox for drawOrder
+    BoxCollider2D _draworderHitbox;
+    BoxCollider2D draworderHitbox
+    {
+        get
+        {
+            if (_draworderHitbox == null)
+                _draworderHitbox = GetComponentInChildren<BoxCollider2D>();
+            return _draworderHitbox;
+        }
+    }
     #endregion
 
 
@@ -107,7 +120,54 @@ public class GuardAI : HealthyEntity
             Debug.LogWarning($"{gameObject.name} was killed by debug key!");
             Die();
         }
+    }
 
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        // some walls (front and back) require us to dynamically update the draw order of sprites
+        // while in contact with such walls:
+        if (collision.tag == "RequiresDrawOrder")
+        {
+            int tilemapOrder = collision.GetComponent<Renderer>().sortingOrder;  // get draw order
+
+            // is wall above or below player?
+            if (collision.gameObject.layer == (int)Layers.Walls)
+            {
+                Vector3 collisionPoint = collision.ClosestPoint(draworderHitbox.bounds.center);
+                if (collisionPoint.y > draworderHitbox.bounds.center.y)
+                    tilemapOrder++;
+                else
+                    tilemapOrder--;
+            }
+            else
+            {
+                if (collision.bounds.center.y > transform.position.y)
+                    tilemapOrder++;
+                else
+                    tilemapOrder--;
+            }
+
+            // update player sprites draw order
+            foreach (SpriteRenderer sprite in spriteRenderers)
+            {
+                sprite.sortingOrder = tilemapOrder;
+            }
+        }
+    }
+    #endregion
+
+
+
+        #region FSM
+        void FixedUpdate()
+    {
+        
+        if(enemyData.itemHeld != null)
+            itemHeld = enemyData.itemHeld;
+        bribeable = enemyData.bribeable;
+        friendly = enemyData.friendly;
+        
         if(agent.velocity.sqrMagnitude > 0.01f)
             lastKnownDirection = agent.velocity.normalized;
         

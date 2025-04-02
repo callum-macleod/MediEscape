@@ -210,7 +210,7 @@ MonoBehaviour:
   takeDmg: {fileID: 8300000, guid: f3645d7388d9f4efc88a56c59b3a70d4, type: 3}
   attack1: {fileID: 8300000, guid: b76357a42d03a4722afcba74c3073136, type: 3}
   enemyData: {fileID: 11400000, guid: 1679e40e0aa2dcb4ebf829fadc601666, type: 2}
-  fovAngle: 60
+  fovAngle: 180
   patrolAreaCenter: {fileID: 511768035115880648}
   patrolAreaRadius: 4
   minPatrolDistance: 2

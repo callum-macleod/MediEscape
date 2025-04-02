@@ -1,23 +1,20 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ActiveIcon : MonoBehaviour
 {
-    public Hotbar hotbar; // Reference to the Hotbar script
-    public Transform player; // Reference to the Player's transform
-    public Vector3 offset = new Vector3(0, 2f, 0); // Position above the player's head
-    public SpriteRenderer iconRenderer; // Sprite Renderer to show the icon above the player
+    public Hotbar hotbar;
+    public Transform player;
+    public Vector3 offset = new Vector3(0, 2f, 0);
+    public SpriteRenderer iconRenderer;
+
+    public Sprite timerIcon; // Assign your circle/timer sprite here
+
     private ItemInfo lastItem;
-
-    private bool HasItemChanged()
-    {
-        return hotbar.items[hotbar.selectedIndex] != lastItem;
-    }
-
-
-
     private int lastIndex = -1;
+    private Coroutine iconChangeRoutine;
 
     void Start()
     {
@@ -32,23 +29,60 @@ public class ActiveIcon : MonoBehaviour
             if (playerObj)
                 player = playerObj.transform;
         }
+
+        if (hotbar)
+               hotbar.OnItemUsed += HandleItemUsed;
+        
+            
+    }
+    void HandleItemUsed(ItemInfo usedItem)
+    {
+        if (iconChangeRoutine != null)
+            StopCoroutine(iconChangeRoutine);
+
+        iconChangeRoutine = StartCoroutine(ShowTransitionIcon());
     }
 
     void Update()
     {
-        if (!hotbar || !player || !iconRenderer) return;
 
-        // Follow the player with offset
         transform.position = player.position + offset;
 
-        // Check if the selected item changed
-        if (hotbar.selectedIndex != lastIndex || HasItemChanged())
-        {
-            UpdateIcon();
-            lastIndex = hotbar.selectedIndex;
-            lastItem = hotbar.items[hotbar.selectedIndex];
-        }
+       
     }
+
+    private bool HasItemChanged()
+    {
+        return hotbar.items[hotbar.selectedIndex] != lastItem;
+    }
+
+    IEnumerator ShowTransitionIcon()
+    {
+        if (timerIcon != null)
+        {
+            iconRenderer.sprite = timerIcon;
+            iconRenderer.enabled = true;
+        }
+
+        float duration = 1f;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            // Spin the icon around its Z axis
+            transform.Rotate(Vector3.forward * 360 * Time.deltaTime); // 360 degrees per second
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        // Reset rotation (optional)
+        transform.rotation = Quaternion.identity;
+
+        // Swap back to actual icon
+        UpdateIcon();
+        iconChangeRoutine = null;
+    }
+
 
     void UpdateIcon()
     {
@@ -64,5 +98,4 @@ public class ActiveIcon : MonoBehaviour
             iconRenderer.enabled = false;
         }
     }
-
 }

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 
 public class Hotbar : MonoBehaviour
@@ -18,6 +17,9 @@ public class Hotbar : MonoBehaviour
 
     public HealthyEntity playerHealth; // Drag player in Inspector
     private GameObject player;
+
+    public event System.Action<ItemInfo> OnItemUsed;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -73,7 +75,10 @@ public class Hotbar : MonoBehaviour
             else if (items[selectedIndex] is Key k)
                 k.Use();
 
+            var usedItem = items[selectedIndex];
+            OnItemUsed?.Invoke(usedItem);
             items[selectedIndex] = null;
+
             UpdateHotbarUI();
         }
     }
@@ -92,7 +97,7 @@ public class Hotbar : MonoBehaviour
     private IEnumerator EnableSpeed(GameObject player, float timerLimit)
     {
         float ogspeed = player.GetComponent<Thief>().moveSpeed;
-        float newSpeed = (player.GetComponent<Thief>().moveSpeed) +2;
+        float newSpeed = (player.GetComponent<Thief>().moveSpeed) *2;
 
         player.GetComponent<Thief>().moveSpeed = newSpeed;
 
@@ -123,13 +128,6 @@ public class Hotbar : MonoBehaviour
                 slotIcons[i].enabled = false; // Hide if no item
             }
 
-            //if (items[i] != null)
-            //    slotImages[i].sprite = items[i].itemIcon;
-            //else
-            //    slotImages[i].sprite = null;
-
-
-            // Scale selected slot
             if (i == selectedIndex)
                 slotImages[i].rectTransform.localScale = Vector3.one * selectedScale;
             else
