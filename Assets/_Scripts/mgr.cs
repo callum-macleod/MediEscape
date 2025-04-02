@@ -20,6 +20,7 @@ public class mgr : MonoBehaviour
     [SerializeField] EnemyInfo knightInfo;
     [SerializeField] private List<ItemInfo> items = new List<ItemInfo>();
     [SerializeField] private Key keyItem;
+    private List<bool> bribeable = new List<bool>() {true, false};
 
     [Header("Camera")]
     [SerializeField] CinemachineCamera cinemachineCamera;
@@ -61,6 +62,7 @@ public class mgr : MonoBehaviour
     {
         GameObject guard = null;
         EnemyInfo enemyData = null;
+        bool bribeFlag = bribeable[guardRefs.Count % 2];
         
         if(spawnPoint.CompareTag("Knight")){
             guard = Instantiate(knightPrefab, spawnPoint.position, Quaternion.identity);
@@ -68,6 +70,7 @@ public class mgr : MonoBehaviour
         }else if(spawnPoint.CompareTag("Soldier")){
             guard = Instantiate(soldierPrefab, spawnPoint.position, Quaternion.identity);
             enemyData = Instantiate(soldierInfo);
+            enemyData.bribeable = bribeFlag;
         }else{
             Debug.LogError("NO TAG");
             return;
