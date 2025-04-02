@@ -112,7 +112,9 @@ public class GuardAI : HealthyEntity
     {
         base.Update();
 
-        if(Input.GetKeyDown(KeyCode.K)){
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+        if (Input.GetKeyDown(KeyCode.K)){
             Debug.LogWarning($"{gameObject.name} was killed by debug key!");
             OnDeath();
         }

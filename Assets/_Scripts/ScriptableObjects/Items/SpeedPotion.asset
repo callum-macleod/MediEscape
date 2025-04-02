@@ -17,7 +17,7 @@ MonoBehaviour:
   itemIcon: {fileID: -8676482130136216939, guid: f7b37b91088c7d44b98c5e710477bd39, type: 3}
   maxStack: 1
   itemType: 0
-  value: 5
+  value: 0
   itemPrefab: {fileID: 3347543616739314971, guid: eaa576adda74d754081b9631541b5ea8, type: 3}
   isUsable: 1
   timerLimit: 5
