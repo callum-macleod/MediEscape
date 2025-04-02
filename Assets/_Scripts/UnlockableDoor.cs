@@ -50,7 +50,8 @@ public class UnlockableDoor : MonoBehaviour
             if (key != null)
             {
                 Unlock();
-                hotbar.items.Remove(key);
+                int idx = hotbar.items.IndexOf(key);
+                hotbar.items[idx] = null;
                 hotbar.UpdateHotbarUI();
             }
         }
