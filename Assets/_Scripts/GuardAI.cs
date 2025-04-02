@@ -105,7 +105,7 @@ public class GuardAI : HealthyEntity
 
         if(Input.GetKeyDown(KeyCode.K)){
             Debug.LogWarning($"{gameObject.name} was killed by debug key!");
-            OnDeath();
+            Die();
         }
 
         if(agent.velocity.sqrMagnitude > 0.01f)
@@ -149,7 +149,7 @@ public class GuardAI : HealthyEntity
         // while in contact with such walls:
         if (collision.tag == "RequiresDrawOrder")
         {
-            int tilemapOrder = collision.GetComponent<TilemapRenderer>().sortingOrder;  // get draw order
+            int tilemapOrder = collision.GetComponent<Renderer>().sortingOrder;  // get draw order
 
             // is wall above or below player?
             if (collision.bounds.center.y > transform.position.y)
@@ -412,14 +412,22 @@ public class GuardAI : HealthyEntity
 
 
     #region DEATH
-    public void OnDeath()
-    {
-        if(isDead) return;
+    //public void OnDeath()
+    //{
+    //    if(isDead) return;
 
-        isDead = true;
+
+    //    isDead = true;
+    //    agent.isStopped = true;
+    //    animator.SetTrigger("die");
+    //    Destroy(gameObject, 2f);
+    //}
+
+    protected override void Die()
+    {
+        GuardManager.Instance.RemoveGuard(this);
         agent.isStopped = true;
-        animator.SetTrigger("die");
-        Destroy(gameObject, 2f);
+        base.Die();
     }
 
     void DropItem()
