@@ -11,6 +11,7 @@ public class HealthPotion : ItemInfo
         {
             Debug.Log($"Healing for {healAmount} HP");
             playerHealth.Heal(healAmount);
+            AudioMgr.Instance.PlayHealthSound(playerHealth.transform);
         }
     }
 

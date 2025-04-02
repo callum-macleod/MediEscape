@@ -10,7 +10,7 @@ public class StealthPotion : ItemInfo
 
     public void Use(GameObject player)
     {
-        
+        AudioMgr.Instance.PlayStealthSound(player.transform);
     }
 
 }

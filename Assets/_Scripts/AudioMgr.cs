@@ -45,6 +45,12 @@ public class AudioMgr : MonoBehaviour
         AudioSource.PlayClipAtPoint(dieSound, transform.position);
     }
 
+    //izeField] AudioClip swapItemSound;
+    //[SerializeField] AudioClip pickupItemSound;
+    //[SerializeField] AudioClip defaultUseItemSound;
+    //[SerializeField] AudioClip useSpeedSound;
+    //[SerializeField] AudioClip useStealthSound;
+    //[SerializeField] AudioClip useHealthSound;
 
     // ITEMS/MENU
     public void PlaySwapItemSound(Transform transform)
@@ -57,5 +63,29 @@ public class AudioMgr : MonoBehaviour
     {
         if (pickupItemSound == null) return;
         AudioSource.PlayClipAtPoint(pickupItemSound, transform.position);
+    }
+
+    public void PlayDefaultUseItemSound(Transform transform)
+    {
+        if (defaultUseItemSound == null) return;
+        AudioSource.PlayClipAtPoint(defaultUseItemSound, transform.position);
+    }
+
+    public void PlaySpeedSound(Transform transform)
+    {
+        if (useSpeedSound == null) return;
+        AudioSource.PlayClipAtPoint(useSpeedSound, transform.position);
+    }
+
+    public void PlayStealthSound(Transform transform)
+    {
+        if (useStealthSound == null) return;
+        AudioSource.PlayClipAtPoint(useStealthSound, transform.position);
+    }
+
+    public void PlayHealthSound(Transform transform)
+    {
+        if (useHealthSound == null) return;
+        AudioSource.PlayClipAtPoint(useHealthSound, transform.position);
     }
 }

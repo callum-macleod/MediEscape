@@ -83,8 +83,8 @@ public class Thief : HealthyEntity
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            TogglePlayerTransparency();
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //    TogglePlayerTransparency();
         if (Input.GetKey(KeyCode.Mouse0) || attackBuffered)
             Attack();
 

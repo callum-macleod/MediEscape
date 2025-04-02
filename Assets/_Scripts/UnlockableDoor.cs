@@ -46,7 +46,7 @@ public class UnlockableDoor : MonoBehaviour
     {
         if (collision.gameObject.layer == (int)Layers.Player)
         {
-            Key key = (Key) hotbar.items.FirstOrDefault(a => a.GetType() == typeof(Key));
+            Key key = (Key) hotbar.items.FirstOrDefault(a => a != null && a.GetType() == typeof(Key));
             if (key != null)
             {
                 Unlock();

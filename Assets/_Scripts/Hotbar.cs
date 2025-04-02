@@ -85,6 +85,7 @@ public class Hotbar : MonoBehaviour
 
     private IEnumerator EnableStealth(GameObject player, float timerLimit)
     {
+        AudioMgr.Instance.PlayStealthSound(player.transform);
         player.layer = LayerMask.NameToLayer("Default");
         player.GetComponent<Thief>().TogglePlayerTransparency();
 
@@ -96,8 +97,11 @@ public class Hotbar : MonoBehaviour
 
     private IEnumerator EnableSpeed(GameObject player, float timerLimit)
     {
-        float ogspeed = player.GetComponent<Thief>().moveSpeed;
-        float newSpeed = (player.GetComponent<Thief>().moveSpeed) *2;
+        AudioMgr.Instance.PlaySpeedSound(player.transform);
+        float ogspeed = 2.5f;
+        float newSpeed = 5;
+        //float ogspeed = player.GetComponent<Thief>().moveSpeed;
+        //float newSpeed = (player.GetComponent<Thief>().moveSpeed) *2;
 
         player.GetComponent<Thief>().moveSpeed = newSpeed;
 

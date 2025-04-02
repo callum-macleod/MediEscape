@@ -7,7 +7,7 @@ public class SpeedPotion : ItemInfo
 
     public void Use(GameObject player)
     {
-
+        AudioMgr.Instance.PlaySpeedSound(player.transform);
     }
 
 }
