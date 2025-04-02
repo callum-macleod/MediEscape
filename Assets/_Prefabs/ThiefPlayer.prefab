@@ -452,8 +452,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
-  takeDmg: {fileID: 8300000, guid: 4ae4fe17d19c04e10920bfaca3bd8290, type: 3}
-  attack1: {fileID: 8300000, guid: 52fa067c25c5c401b811eb86d142287e, type: 3}
   spriteRenderers:
   - {fileID: 3439346278451372174}
   - {fileID: 116892850032529774}
@@ -1314,6 +1312,7 @@ MonoBehaviour:
   player: {fileID: 6781424697917101064}
   offset: {x: 0, y: 2, z: 0}
   iconRenderer: {fileID: 6279900435496701387}
+  timerIcon: {fileID: 4451616173450814697, guid: 31d5a89c9c54dab48921ba12cf57d16d, type: 3}
 --- !u!61 &407570023027010618
 BoxCollider2D:
   m_ObjectHideFlags: 0
