@@ -34,6 +34,8 @@ public class mgr : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Time.timeScale = 1f;
+
         if(!debugGuards){    
             thiefRef = Instantiate(thiefPrefab, thiefSpawnPoint.position, Quaternion.identity);
             thiefRef.name = "Thief";

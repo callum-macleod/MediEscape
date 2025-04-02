@@ -1,3 +1,4 @@
+using System.Threading;
 using System.ComponentModel;
 using UnityEngine;
 
@@ -69,6 +70,35 @@ public class HealthyEntity : MonoBehaviour
         print($"{name}: Dying");
         animator.SetTrigger("TrDie");
         dead = true;
-        Destroy(gameObject, 0.8f);
+
+        if (CompareTag("Player"))
+        {
+            // Don't destroy immediately – give time for animation/UI
+            //DeathScreenMgr.Instance.ShowDeathScreen();
+            Invoke(nameof(ShowDeathScreen), 0.8f);
+            Destroy(gameObject, 0.8f); // Delay destruction
+            Invoke(nameof(PauseGame), 1f);
+
+
+            //DeathScreenMgr.Instance.ShowDeathScreen();
+
+        }
+        else
+        {
+            Destroy(gameObject, 0.8f);
+        }
+
+
+    }
+
+    void ShowDeathScreen()
+    {
+        DeathScreenMgr.Instance.ShowDeathScreen();
+    }
+
+    void PauseGame()
+    {
+        Time.timeScale = 0f;
+
     }
 }
