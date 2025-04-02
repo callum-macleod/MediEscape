@@ -203,37 +203,37 @@ public class GuardAI : HealthyEntity
         SetFacingDirection();
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        // some walls (front and back) require us to dynamically update the draw order of sprites
-        // while in contact with such walls:
-        if (collision.tag == "RequiresDrawOrder")
-        {
-            int tilemapOrder = collision.GetComponent<Renderer>().sortingOrder;  // get draw order
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    // some walls (front and back) require us to dynamically update the draw order of sprites
+    //    // while in contact with such walls:
+    //    if (collision.tag == "RequiresDrawOrder")
+    //    {
+    //        int tilemapOrder = collision.GetComponent<Renderer>().sortingOrder;  // get draw order
 
-            // is wall above or below player?
-            if (collision.bounds.center.y > transform.position.y)
-                tilemapOrder++;
-            else
-                tilemapOrder--;
+    //        // is wall above or below player?
+    //        if (collision.bounds.center.y > transform.position.y)
+    //            tilemapOrder++;
+    //        else
+    //            tilemapOrder--;
 
-            // update player sprites draw order
-            foreach (SpriteRenderer sprite in spriteRenderers)
-            {
-                sprite.sortingOrder = tilemapOrder;
-            }
-        }
-    }
+    //        // update player sprites draw order
+    //        foreach (SpriteRenderer sprite in spriteRenderers)
+    //        {
+    //            sprite.sortingOrder = tilemapOrder;
+    //        }
+    //    }
+    //}
     #endregion
 
 
 
-    #region FSM
-    void FixedUpdate()
-    {
+    //#region FSM
+    //void FixedUpdate()
+    //{
         
-    }
-    #endregion
+    //}
+    //#endregion
 
 
 
