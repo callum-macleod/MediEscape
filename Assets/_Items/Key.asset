@@ -19,5 +19,5 @@ MonoBehaviour:
   itemType: 2
   value: 0
   itemPrefab: {fileID: 2692855573837123005, guid: 1ab63252e214454459447f8a34a51125, type: 3}
-  isUsable: 1
+  isUsable: 0
   player: {fileID: 1434601564064693640, guid: 01307b387de4af546b0bd2f45e244770, type: 3}
