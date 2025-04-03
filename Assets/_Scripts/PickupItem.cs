@@ -26,7 +26,7 @@ public class PickupItem : MonoBehaviour
             
             if (hotbar != null){
                 if(hotbar.HasFreeSlot()){
-                    Pickup(hotbar);
+                    Pickup(hotbar, collision.gameObject);
                 }
                 else
                 {
@@ -38,7 +38,7 @@ public class PickupItem : MonoBehaviour
         }
     }
 
-    private void Pickup(Hotbar hotbar)
+    private void Pickup(Hotbar hotbar, GameObject player)
     {
         if (!canBePickedUp || itemData == null) return;
 
@@ -52,6 +52,7 @@ public class PickupItem : MonoBehaviour
         {
             Debug.Log($"Attempting to add {itemData.name} to Hotbar");
             hotbar.AddItemToHotbar(itemData);  // Add the item
+            player.GetComponentInChildren<ActiveIcon>().UpdateIcon();
             Destroy(gameObject);
         }
         else
