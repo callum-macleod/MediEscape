@@ -54,6 +54,7 @@ public class UnlockableDoor : MonoBehaviour
                 hotbar.items[idx] = null;
                 hotbar.UpdateHotbarUI();
                 collision.gameObject.GetComponentInChildren<ActiveIcon>().UpdateIcon();
+                AudioMgr.Instance.PlayDoorSound(transform);
             }
         }
     }

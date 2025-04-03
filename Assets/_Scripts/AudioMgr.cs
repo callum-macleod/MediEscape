@@ -19,9 +19,11 @@ public class AudioMgr : MonoBehaviour
     [SerializeField] AudioClip useHealthSound;
 
     [Header("Enemy Interactions")]
-    [SerializeField] AudioClip bribeSound;
     [SerializeField] AudioClip aggroSound;
+    [SerializeField] AudioClip bribeSound;
 
+    [Header("Door")]
+    [SerializeField] AudioClip doorSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -98,5 +100,10 @@ public class AudioMgr : MonoBehaviour
     {
         if (aggroSound == null) return;
         AudioSource.PlayClipAtPoint(aggroSound, transform.position);
+    }
+    public void PlayDoorSound(Transform transform)
+    {
+        if (doorSound == null) return;
+        AudioSource.PlayClipAtPoint(doorSound, transform.position);
     }
 }
