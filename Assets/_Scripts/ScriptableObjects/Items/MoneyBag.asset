@@ -19,4 +19,4 @@ MonoBehaviour:
   itemType: 1
   value: 50
   itemPrefab: {fileID: 3347543616739314971, guid: 2cb2f6e3dd352cd49bdbae9828c8e006, type: 3}
-  isUsable: 1
+  isUsable: 0
