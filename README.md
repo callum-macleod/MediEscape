@@ -12,7 +12,7 @@ Unity store assets:
 	Miniature Army 2D V.1
 
 ## Known Issues/Bugs
-On any run, there is a small chance for enemies to appear nearly invisible.
+In game builds, there is a small chance for enemies to be invisible on any given run.
 	restart fixes in most scenarios.
 MoneyBags cannot be manually consumed/dropped. Therefore, you will be unable to pick up keys if you have moneybags in each hotbar slot.
 	Restart is required to progress.
