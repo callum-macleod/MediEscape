@@ -18,3 +18,4 @@ MoneyBags cannot be manually consumed/dropped. Therefore, you will be unable to 
 	Restart is required to progress.
 "Tips" UI is made visible upon closing the Letter from your family (this is intentional).
 	Press T to toggle the Tips visibility.
+UI is scaled to 1920x1080 resolution
