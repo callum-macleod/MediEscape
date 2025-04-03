@@ -601,8 +601,8 @@ public class GuardAI : HealthyEntity
             return false;
         }
 
-        if (state == GuardState.CHASE && STATE != GuardState.CHASE)
-            AudioMgr.Instance.PlayAggroSound(transform);
+        //if (state == GuardState.CHASE && STATE != GuardState.CHASE)
+        //    AudioMgr.Instance.PlayAggroSound(transform);
 
         STATE = state;
 
