@@ -18,7 +18,7 @@ public class Trading : MonoBehaviour
     void Update()
     {
         itemHeld = civilianInfo.tradable;
-        if(playerNearby && Input.GetKeyDown(KeyCode.T)){
+        if(playerNearby && Input.GetKeyDown(KeyCode.F)){
             Trade();
         }
     }
@@ -56,6 +56,8 @@ public class Trading : MonoBehaviour
                 tradeable = true;
                 hotbar.GiveItem(idx);
                 SwapItems(item);
+                hotbar.UpdateHotbarUI();
+                player.GetComponentInChildren<ActiveIcon>().UpdateIcon();
                 return true;
             }
 
