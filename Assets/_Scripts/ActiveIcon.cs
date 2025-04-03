@@ -84,7 +84,7 @@ public class ActiveIcon : MonoBehaviour
     }
 
 
-    void UpdateIcon()
+    public void UpdateIcon()
     {
         var selectedItem = hotbar.items[hotbar.selectedIndex];
         if (selectedItem != null && selectedItem.itemIcon != null)

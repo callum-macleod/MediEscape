@@ -52,6 +52,7 @@ public class Hotbar : MonoBehaviour
     {
         selectedIndex = index;
         UpdateHotbarUI();
+        player.GetComponentInChildren<ActiveIcon>().UpdateIcon();
         AudioMgr.Instance.PlaySwapItemSound(player.transform);
     }
 
