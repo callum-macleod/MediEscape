@@ -60,9 +60,9 @@ public class Hiding : MonoBehaviour
 
     void Update()
     {
-        if (playerNearby && Input.GetKeyDown(KeyCode.H))
+        if (playerNearby && Input.GetKeyDown(KeyCode.F))
             ToggleHiding();
-        else if (playerHidden && Input.GetKeyDown(KeyCode.H))
+        else if (playerHidden && Input.GetKeyDown(KeyCode.F))
             ToggleHiding();
     }
 
