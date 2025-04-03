@@ -20,4 +20,4 @@ MonoBehaviour:
   value: 0
   itemPrefab: {fileID: 3347543616739314971, guid: 0344284624032d942a3d42809f2c01be, type: 3}
   isUsable: 1
-  timerLimit: 5
+  timerLimit: 7
