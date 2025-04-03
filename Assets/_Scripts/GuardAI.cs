@@ -526,7 +526,7 @@ public class GuardAI : HealthyEntity
             Vector3 dropPosition = transform.position;
             GameObject droppedItem = Instantiate(itemHeld.itemPrefab, dropPosition, Quaternion.identity);
             PickupItem pickup = droppedItem.AddComponent<PickupItem>();
-            if(pickup != null)
+            if(pickup != null && enemyData.itemHeld != null)
                 pickup.SetItemInfo(Instantiate(enemyData.itemHeld));
             Collider2D coll = droppedItem.GetComponent<Collider2D>();
             coll.isTrigger = true;
