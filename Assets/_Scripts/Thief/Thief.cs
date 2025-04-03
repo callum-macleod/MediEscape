@@ -149,11 +149,11 @@ public class Thief : HealthyEntity
                     tilemapOrder--;
             }
 
-                // update player sprites draw order
-                foreach (SpriteRenderer sprite in spriteRenderers)
-                {
-                    sprite.sortingOrder = tilemapOrder;
-                }
+            // update player sprites draw order
+            foreach (SpriteRenderer sprite in spriteRenderers)
+            {
+                sprite.sortingOrder = tilemapOrder;
+            }
         }
     }
 

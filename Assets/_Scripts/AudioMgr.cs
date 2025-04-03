@@ -18,6 +18,10 @@ public class AudioMgr : MonoBehaviour
     [SerializeField] AudioClip useStealthSound;
     [SerializeField] AudioClip useHealthSound;
 
+    [Header("Enemy Interactions")]
+    [SerializeField] AudioClip bribeSound;
+    [SerializeField] AudioClip aggroSound;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,13 +48,6 @@ public class AudioMgr : MonoBehaviour
         if (dieSound == null) return;
         AudioSource.PlayClipAtPoint(dieSound, transform.position);
     }
-
-    //izeField] AudioClip swapItemSound;
-    //[SerializeField] AudioClip pickupItemSound;
-    //[SerializeField] AudioClip defaultUseItemSound;
-    //[SerializeField] AudioClip useSpeedSound;
-    //[SerializeField] AudioClip useStealthSound;
-    //[SerializeField] AudioClip useHealthSound;
 
     // ITEMS/MENU
     public void PlaySwapItemSound(Transform transform)
@@ -87,5 +84,19 @@ public class AudioMgr : MonoBehaviour
     {
         if (useHealthSound == null) return;
         AudioSource.PlayClipAtPoint(useHealthSound, transform.position);
+    }
+
+    // ENEMY INTERACTIONS
+
+    public void PlayBribeSound(Transform transform)
+    {
+        if (bribeSound == null) return;
+        AudioSource.PlayClipAtPoint(bribeSound, transform.position);
+    }
+
+    public void PlayAggroSound(Transform transform)
+    {
+        if (aggroSound == null) return;
+        AudioSource.PlayClipAtPoint(aggroSound, transform.position);
     }
 }

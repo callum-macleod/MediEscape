@@ -164,6 +164,7 @@ public class GuardAI : HealthyEntity
             ItemInfo mb = (ItemInfo)hotbar.items.FirstOrDefault(a => a != null && a.itemPrefab.name == "Loot_Sack");
             if (mb != null)
             {
+                AudioMgr.Instance.PlayBribeSound(transform);
                 int idx = hotbar.items.IndexOf(mb);
                 hotbar.items[idx] = null;
                 hotbar.UpdateHotbarUI();
@@ -599,13 +600,17 @@ public class GuardAI : HealthyEntity
             return false;
         }
 
+        if (state == GuardState.CHASE && STATE != GuardState.CHASE)
+            AudioMgr.Instance.PlayAggroSound(transform);
+
         STATE = state;
+
 
         switch (STATE)
         {
-            case GuardState.PATROL:
             case GuardState.ALERTED:
             case GuardState.CHASE:
+            case GuardState.PATROL:
             case GuardState.SEARCH:
                 ChangeAnimation(AnimationTriggers.Walk);
                 break;
