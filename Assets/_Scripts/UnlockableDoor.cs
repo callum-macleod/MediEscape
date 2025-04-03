@@ -53,6 +53,7 @@ public class UnlockableDoor : MonoBehaviour
                 int idx = hotbar.items.IndexOf(key);
                 hotbar.items[idx] = null;
                 hotbar.UpdateHotbarUI();
+                collision.gameObject.GetComponentInChildren<ActiveIcon>().UpdateIcon();
             }
         }
     }

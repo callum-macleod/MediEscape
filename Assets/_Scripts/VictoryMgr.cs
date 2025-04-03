@@ -29,7 +29,6 @@ public class VictoryMgr : MonoBehaviour
     void Start()
     {
         victoryscreenUI.SetActive(false);
-
     }
 
     // Update is called once per frame

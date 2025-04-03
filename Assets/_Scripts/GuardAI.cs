@@ -168,6 +168,7 @@ public class GuardAI : HealthyEntity
                 int idx = hotbar.items.IndexOf(mb);
                 hotbar.items[idx] = null;
                 hotbar.UpdateHotbarUI();
+                collision.gameObject.GetComponentInChildren<ActiveIcon>().UpdateIcon();
                 hotbar.GiveItem(idx);
                 SwapItems(hotbar.items[idx]);
                 targetEscaped = false;
